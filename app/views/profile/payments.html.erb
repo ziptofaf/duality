@@ -1,0 +1,21 @@
+<%= render 'menu' %>
+<div class = "container-right">
+<p> Your purchase history </p>
+<table class = "table table-bordered">
+<% @purchase.each do |purchase|   %>
+<tr>
+<td><%= purchase.name %></td>
+<td><%= number_to_currency(purchase.value) %></td>
+<td><%= purchase.date %></td></tr>
+<% end %>
+</table>
+<p> Your payments history </p>
+<table class = "table">
+<% @payment.each do |payment|   %>
+<tr>
+<td><%= number_to_currency(payment.amount) %></td>
+<td><%= payment.status %></td>
+<td><%= payment.updated_at %></td></tr>
+<% end %>
+</table>
+</div>

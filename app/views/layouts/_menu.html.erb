@@ -1,0 +1,18 @@
+<div class="center hero-unit world">
+      <div class="navbar-inner">
+        <div class="container">
+<nav><ul class="nav navbar-nav to_lower">
+<li><%= link_to "Home", root_path %></li>
+<li><%= link_to "Store", store_path %></li>
+<li><%= link_to "FAQ", "https://dualitynetwork.zendesk.com/hc/en-us" %></li>
+<% unless logged_in? %>
+<li><%= link_to "Sign in", login_path %></li>
+<% else %>
+<li><%=link_to "Sign out", logout_path %></li>
+<li><%=link_to "My account", profile_path %></li>
+<li><%=link_to "#{number_to_currency(balance)}", wallet_add_funds_path %></li>
+<% end %>
+</ul>
+</nav></div></div>
+
+</div>

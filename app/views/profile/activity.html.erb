@@ -1,0 +1,8 @@
+<%= render 'menu' %>
+<div class = "container-right">
+
+Bytes sent
+<%= area_chart @logs.group(:end).sum(:bytes_sent) %>
+Bytes received
+<%= area_chart @logs.group(:end).sum(:bytes_received) %>
+</div>

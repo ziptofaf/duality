@@ -1,0 +1,29 @@
+<div class="center hero-unit">
+<h1>Duality Store</h1>
+<% if flash[:notice] %>
+<div class="alert alert-notice"><%= flash[:notice] %></div>
+<% end %>
+ <% if flash[:error] %>
+<div class="alert alert-error"><%= flash[:error] %></div>
+<% end %>
+<table class = "table table-bordered">
+<% count = 1 %>
+<% @controllers.each do |controller| %>
+	<% @products.each do |product| %>
+		<%if controller.id==product.ProductProcessor_id %>
+			<% url="/store/#{product.id}" %>
+			<%= "<tr>".html_safe if tr_pattern(count) %>
+			<td><div style="width: 220px;"><%= link_to(image_tag(product.image.to_s, :title=>product.name.to_s, :alt=>product.name.to_s), url) %><br>
+			<%= "<div id=\"expand#{count}\">".html_safe %>
+			<%= "<a class=\"single\" target = \"#{count}\">".html_safe %>
+			<%= image_tag("expand.png", :id => "button#{count}".html_safe) %></a></div>
+			<%= "<div id=\"extended#{count}\" class = \"targetDiv\">".html_safe %>
+			<%= product.description.to_s.html_safe %><br></div></div></td>
+			<%= "</tr>".html_safe if tr_done_pattern(count) %>
+			<% count=count+1 %>
+		<% end %>
+	<% end %>
+</tr>
+<% end  %>
+</table>
+</div>

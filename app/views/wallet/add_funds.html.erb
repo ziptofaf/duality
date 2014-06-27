@@ -1,0 +1,28 @@
+<h1>Add funds to your wallet</h1>
+<div class ="col-md-4 semicenter">
+<% if flash[:notice] %>
+<div class="alert alert-notice"><%= flash[:notice] %></div>
+<% end %>
+<% if flash[:error] %>
+<div class="alert alert-error"><%= flash[:error] %></div>
+<% end %>
+<%= form_for :wallet do |f| %>
+<%= 'How much do you want to add?' %>
+<br /><%= f.radio_button :amount, '$1' %> 
+<%= f.label :amount, '$1', :value => '$1' %>
+<br /><%= f.radio_button :amount, '$5' %>
+<%= f.label :amount, '$5', :value => '$5' %>
+<br /><%= f.radio_button :amount, '$10' %>
+<%= f.label :amount, '$10', :value => '$10' %>
+<br /><%= f.radio_button :amount, '$25' %>
+<%= f.label :amount, '$25', :value => '$25' %>
+<br /><%= f.radio_button :amount, '$25' %>
+<%= f.label :amount, '$50', :value => '$50' %>
+<br /><%= f.radio_button :amount, 'custom' %>
+<%= f.label :amount, 'custom', :value => 'custom' %>
+<%= f.text_field :val  %><br />
+<%= f.label :method, 'Payment method' %>
+<%= f.select :payment_method, @array, :prompt => 'Select One' %>
+<br /><%=f.submit %>
+<% end %>
+</div>

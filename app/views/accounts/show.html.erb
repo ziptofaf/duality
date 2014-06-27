@@ -1,0 +1,38 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Login:</strong>
+  <%= @account.login %>
+</p>
+
+<p>
+  <strong>Password:</strong>
+  <%= @account.password %>
+</p>
+
+<p>
+  <strong>Level:</strong>
+  <%= @account.level %>
+</p>
+
+<p>
+  <strong>Expire:</strong>
+  <%= @account.expire %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @account.user %>
+</p>
+
+<p>
+  <strong>Server:</strong>
+  <%= @account.server %>
+</p>
+
+<p>
+  <strong>Product:</strong>
+  <%= @account.product %>
+</p>
+<%= link_to 'Edit', edit_account_path(@account) %> |
+<%= link_to 'Back', accounts_path %>

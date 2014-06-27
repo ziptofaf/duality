@@ -1,0 +1,12 @@
+<%= render 'menu' %>
+<div class = "container-right">
+<table class = "table">
+<% @vpns.each do |vpn| %>
+<tr>
+<td><%= vpn.expire %></td>
+<td><%= vpn.ip %></td>
+<td><%= vpn.location %></td>
+</tr>
+<% end %>
+</table>
+</div>

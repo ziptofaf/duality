@@ -1,0 +1,38 @@
+<h1>Listing accounts</h1>
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>Login</th>
+      <th>Password</th>
+      <th>Level</th>
+      <th>Expire</th>
+      <th>User</th>
+      <th>Server</th>
+      <th>Product</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @accounts.each do |account| %>
+      <tr>
+        <td><%= account.login %></td>
+        <td><%= account.password %></td>
+        <td><%= account.level %></td>
+        <td><%= account.expire %></td>
+        <td><%= account.user %></td>
+        <td><%= account.server %></td>
+        <td><%= account.product %></td>
+        <td><%= link_to 'Show', account %></td>
+        <td><%= link_to 'Edit', edit_account_path(account) %></td>
+        <td><%= button_to 'Destroy', account, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Account', new_account_path %>

@@ -1,0 +1,29 @@
+<%= render 'menu' %>
+<div class = "container-right">
+
+<% if flash[:notice] %>
+<div class ='alert alert-notice'><%= flash[:notice] %> </div>
+<% end %>
+<% if flash[:error] %>
+<div class ='alert alert-error'><%= flash[:error] %> </div>
+<% end %>
+
+<% if @user.errors.any? %>
+    <div class="alert alert-error">
+      <h2><%= pluralize(@user.errors.count, "error") %> prohibited you from registering: </h2>
+
+<% @user.errors.full_messages.each do |msg| %>
+<%= msg %><br />
+<% end %></ul></div>
+<% end %>
+
+<%= form_for :profile, url: {action: "update"} do |f| %>
+<%= 'Enter your current password' %>
+<%= f.password_field :current_password, :class => 'form-control center' %>
+<%= 'Enter your new password' %>
+<%= f.password_field :password, :class => 'form-control center' %>
+<%= 'Repeat your new password' %>
+<%= f.password_field :password_confirmation, :class => 'form-control center' %>
+<%=f.submit %>
+<% end %>
+</div>
