@@ -2,10 +2,11 @@ class SupportController < ApplicationController
 skip_before_action :authorize
 require 'securerandom'
   def forgot_password
+	
   end
 
   def password_reset
-  	redirect_to root_path and return unless recovery_params[:email]
+  	redirect_to root_path and return unless recovery_params[:email] and recovery_params[:answer] and recovery_params[:answer]=="abbzx"
   	RecoveryMailer.send_password_code(recovery_params[:email]).deliver
 	flash[:notice]="If entered e-mail adress was correct, you will be sent a message containing information necessary to change your password"
 	redirect_to root_path
@@ -30,7 +31,7 @@ require 'securerandom'
   end
 
   def recovery_params
-	params.permit(:email)
+	params.require(:recovery).permit(:email, :answer)
   end
 
   def token_params

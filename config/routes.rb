@@ -6,8 +6,9 @@ Duality::Application.routes.draw do
   match "profile/update", to: "profile#update", via: 'post'
   get "profile/payments"
   get "profile/vpns"
+  get "support/forgot_password"
   get "support/password_reset_confirm"
-  get "support/password_reset"
+  post "support/password_reset"
   match 'store', to: 'store#index', via: 'get' 
   get "store/:id" => "store#view"
   resources :products 

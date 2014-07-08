@@ -24,6 +24,7 @@
         <td><%= server.capacity_current %></td>
         <td><%= server.cert_url %></td>
         <td><%= server.level %></td>
+	<td><%= server.certname %></td>
         <td><%= link_to 'Show', server %></td>
         <td><%= link_to 'Edit', edit_server_path(server) %></td>
         <td><%= button_to 'Destroy', server, method: :delete, data: { confirm: 'Are you sure?' } %></td>

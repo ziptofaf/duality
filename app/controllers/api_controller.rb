@@ -7,7 +7,7 @@ respond_to :json
     return unless api_params[:email] && api_params[:password] && api_params[:api_key]
    user = User.find_by(email: api_params[:email].downcase)
   if user && user.active>=1 && user.authenticate(api_params[:password]) && api_params[:api_key]=='MsofNLIfkVI4p28028q4'
-   @test = Account.joins(:user).joins(:server).where('user_id=?', user.id).select(:login, :password, :ip, :cert_url, :location, 'servers.level')
+   @test = Account.joins(:user).joins(:server).where('user_id=?', user.id).select(:login, :password, :ip, :cert_url, :certname, :location, 'servers.level')
      else
    return
    end
