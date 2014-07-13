@@ -8,6 +8,12 @@
 <% if flash[:error] %>
 <div class="alert alert-error"><%= flash[:error] %></div>
 <% end %>
+<% if flash[:forgot] %>
+<div class = "alert alert-error">
+If you forgot your password, please visit
+<%= link_to "this site", support_forgot_password_path %>
+</div> 
+<% end %>
 <%= form_for(:session, url: sessions_path) do |f| %>
 <div class="form-group">
       <%= f.label :email %>
@@ -18,5 +24,7 @@
 </div>
       <%= f.submit "Sign in", :class => 'btn btn-default' %>
     <% end %></div>
+Don't have an account yet?
+<%= link_to "Register now", signup_path %>
 </div>
 </div>

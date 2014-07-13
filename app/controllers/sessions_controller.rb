@@ -17,6 +17,7 @@ force_ssl if: :ssl_configured?
    redirect_to root_path
   else
    flash.now[:error] = 'Invalid email/password combination'
+   flash.now[:forgot] = "visit"
    render 'new'
   end
  end

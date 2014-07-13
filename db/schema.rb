@@ -11,12 +11,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140701221401) do
+ActiveRecord::Schema.define(version: 20140711133455) do
 
   create_table "account_logs", force: true do |t|
     t.integer  "account_id"
-    t.integer  "bytes_sent"
-    t.integer  "bytes_received"
+    t.integer  "kilobytes_sent"
+    t.integer  "kilobytes_received"
     t.datetime "start"
     t.datetime "end"
     t.datetime "created_at"
@@ -24,7 +24,7 @@ ActiveRecord::Schema.define(version: 20140701221401) do
     t.string   "remote"
   end
 
-  add_index "account_logs", ["account_id"], name: "index_account_logs_on_account_id", using: :btree
+  add_index "account_logs", ["account_id"], name: "index_account_logs_on_account_id"
 
   create_table "accounts", force: true do |t|
     t.string   "login"
@@ -36,11 +36,12 @@ ActiveRecord::Schema.define(version: 20140701221401) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "product_id"
+    t.integer  "active"
   end
 
-  add_index "accounts", ["product_id"], name: "index_accounts_on_product_id", using: :btree
-  add_index "accounts", ["server_id"], name: "index_accounts_on_server_id", using: :btree
-  add_index "accounts", ["user_id"], name: "index_accounts_on_user_id", using: :btree
+  add_index "accounts", ["product_id"], name: "index_accounts_on_product_id"
+  add_index "accounts", ["server_id"], name: "index_accounts_on_server_id"
+  add_index "accounts", ["user_id"], name: "index_accounts_on_user_id"
 
   create_table "payments", force: true do |t|
     t.integer  "processor_id"
@@ -52,8 +53,8 @@ ActiveRecord::Schema.define(version: 20140701221401) do
     t.datetime "updated_at"
   end
 
-  add_index "payments", ["processor_id"], name: "index_payments_on_processor_id", using: :btree
-  add_index "payments", ["user_id"], name: "index_payments_on_user_id", using: :btree
+  add_index "payments", ["processor_id"], name: "index_payments_on_processor_id"
+  add_index "payments", ["user_id"], name: "index_payments_on_user_id"
 
   create_table "processors", force: true do |t|
     t.string   "name"
@@ -80,7 +81,7 @@ ActiveRecord::Schema.define(version: 20140701221401) do
     t.string   "image"
   end
 
-  add_index "products", ["ProductProcessor_id"], name: "index_products_on_ProductProcessor_id", using: :btree
+  add_index "products", ["ProductProcessor_id"], name: "index_products_on_ProductProcessor_id"
 
   create_table "purchases", force: true do |t|
     t.string   "name"
@@ -91,7 +92,7 @@ ActiveRecord::Schema.define(version: 20140701221401) do
     t.integer  "user_id"
   end
 
-  add_index "purchases", ["user_id"], name: "index_purchases_on_user_id", using: :btree
+  add_index "purchases", ["user_id"], name: "index_purchases_on_user_id"
 
   create_table "recoveries", force: true do |t|
     t.integer  "user_id"
@@ -101,7 +102,7 @@ ActiveRecord::Schema.define(version: 20140701221401) do
     t.datetime "updated_at"
   end
 
-  add_index "recoveries", ["user_id"], name: "index_recoveries_on_user_id", using: :btree
+  add_index "recoveries", ["user_id"], name: "index_recoveries_on_user_id"
 
   create_table "servers", force: true do |t|
     t.string   "ip"

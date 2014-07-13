@@ -1,5 +1,5 @@
 Duality::Application.routes.draw do
- #get 'errors/routing'
+  #get 'errors/routing'
 
   match "profile", to: "profile#general", via: 'get'
   match "profile/change", to: "profile#change", via: 'get'
@@ -16,8 +16,7 @@ Duality::Application.routes.draw do
   #match "api/client_side", to: 'api#client_side', via: 'get'
   match "api/client_side", to: 'api#client_side', via: 'post', :defaults => { :format => 'json' }
   match "api/server_side", to: 'api#server_side', via: 'post', :defaults => { :format => 'json' }
-  match "api/check_ip", to: 'api#check_ip', via: 'get', :defaults => { :format => 'json' }
-  match "api/disconnect", to: 'api#disconnect', via: 'post', :defaults => { :format => 'json'}
+  match "api/check_ip", to: 'api#check_ip', via: 'get', 
   get "wallet/add_funds"
   get "wallet/check_history"
   match '/wallet/add_funds', to: 'wallet#create', via: 'post'
@@ -44,11 +43,7 @@ Duality::Application.routes.draw do
  namespace :product_processors do
   #match 'vpn_new', to: 'vpn#new', via: 'get'
   get "vpn_new/:id" => "vpn#new"
-  match 'buy_vpn', to: "vpn#create", via: 'post'
-  get "vpn/extend/:id" => "vpn#update" 
-  get 'vpn/details/:id' => "vpn#details"
-  match "vpn/extend", to: "vpn#extend_account", via: 'post'
-  get "vpn/sendZip"
+  match 'buy_vpn', to: "vpn#create", via: 'post' 
  end
   # You can have the root of your site routed with "root"
   # root 'welcome#index'

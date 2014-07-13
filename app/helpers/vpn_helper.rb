@@ -21,17 +21,20 @@ module VpnHelper
  end 
 
  def can_extend?(id)
-  error_message and raise 'Invalid_id' unless Account.exists?(id: id, user_id: session[:id])
+  error_message and raise 'Invalid_id' unless Account.exists?(id: id, user_id: session[:user_id])
   account = Account.find(id)
   error_message and raise 'Trying to access foreign account' unless session[:user_id]==account.user_id
   flash[:error]="This offer is discontinued and cannot be extended" and raise 'Product no longer exists!' unless Product.exists?(id: account.product_id)
+  product = Product.find(account.product_id)
+  return product
  end
  
- def extend_account(id, length)
+ def extend_this_account(id, length)
   error_message and raise 'Invalid_id' unless Account.exists?(id: id)
   account = Account.find(id)
   expire = account.expire
-  new_date = expire + length.months
+  new_date = expire + length.to_i.months if length>0.5
+  new_date = expire + 2.weeks if length==0.5
   account.update_attribute :expire, new_date
  end
 
@@ -43,6 +46,7 @@ module VpnHelper
   account.user_id = session[:user_id]
   account.level = server.level
   account.product_id = product_id
+  account.active = 0
   if expire_value==0.5
     account.expire = 2.weeks.from_now 
   else
@@ -51,7 +55,7 @@ module VpnHelper
   error_message and raise 'couldnt save the record' unless account.save
  end
 
- def log_payment(product_id, value)
+ def log_payment(product_id, value, extending=false)
   purchase = Purchase.new
   purchase.date = Time.now
   purchase.user_id=session[:user_id]
@@ -59,11 +63,13 @@ module VpnHelper
   error_message and raise 'INVALID PRODUCT ID' unless Product.exists?(id: product_id)
   product = Product.find(product_id)
   purchase.name=product.name #this means that even if i delete the product, log is saved under proper name
+  purchase.name = product.name + " - extending" if extending==true
   error_message and raise 'couldnt save the log record' unless purchase.save
  end
  
  def random_hash
   random_string = SecureRandom.base64(30)
+  random_string.split(/[+,=\/]/).join
  end
 
  def parameters_to_level (parameter)

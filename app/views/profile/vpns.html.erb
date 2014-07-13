@@ -6,6 +6,10 @@
 <td><%= vpn.expire %></td>
 <td><%= vpn.ip %></td>
 <td><%= vpn.location %></td>
+<%= "<td>Currently in use</td>".html_safe if vpn.active>=1 %></td>
+<%= "<td>Not in use</td>".html_safe if vpn.active==0 %>
+<td><%= link_to "Extend this VPN", {controller: "product_processors/vpn", action: :update, id: vpn.id} %></td>
+<td><%= button_to "Connection details", {controller: "product_processors/vpn", action: :details, id: vpn.id}, :method=> :get, data: { confirm: "This will show your private connection details to this VPN in plain text. Are you sure?" }, :class => 'btn btn-default' %></td>
 </tr>
 <% end %>
 </table>

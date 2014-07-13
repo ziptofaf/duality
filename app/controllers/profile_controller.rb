@@ -9,7 +9,7 @@ class ProfileController < ApplicationController
   end
 
   def vpns
-	@vpns = Account.joins(:server).where("user_id = ? AND expire > ?", session[:user_id], Time.now).select(:login, :password, :expire, :ip, :location)
+	@vpns = Account.joins(:server).where("user_id = ? AND expire > ?", session[:user_id], Time.now).select(:login, :password, :expire, :ip, :location, :active, "accounts.id")
   end
   def change
   	@user = User.find(session[:user_id])
@@ -32,7 +32,8 @@ end
 
 def activity
 @user = User.find(session[:user_id])
-@logs = User.joins(:account_logs).where('user_id=?', @user.id).select(:bytes_sent, :bytes_received, :start, :end)
+@logs = User.joins(:account_logs).where('user_id=?', @user.id).select(:kilobytes_sent, :kilobytes_received, :start, :end)
+#redirect_to root_path and flash[:error]="You have no VPN accounts to check their activity" and return if @logs.empty?
 end
 
 end

@@ -1,5 +1,6 @@
 class ProductProcessors::VpnController < ApplicationController
 include VpnHelper
+include ZipHelper
 def new
 	my_id
 	(redirect_to root_path and error_message and return) unless Product.exists?(id: (vpn_params[:id].to_i), ProductProcessor_id: (@@my_id.to_i))
@@ -32,11 +33,61 @@ def create
                 redirect_to store_path and flash[:error]= "#{e}" and return
         end
                 flash[:notice]="Your account has been created!"
-                redirect_to root_path	
+		redirect_to store_path
+		 
 end
 
 def update
+	begin
+		@product = can_extend?(vpn_params[:id])
+		#flash[:account_id] = (vpn_params[:id])
+	rescue => e
+		redirect_to root_path and return
+	end
 end
+
+def extend_account
+	begin
+		redirect_to root_path and error_message and return unless extend_params[:id] and extend_params[:time]
+		product = can_extend?(extend_params[:id])
+		check_if_correct(extend_params[:time].to_f)
+		to_pay = (extend_params[:time].to_f * product.price.to_f).round(2)
+		pay(to_pay) 
+		log_payment(product.id, to_pay, true)
+		extend_this_account(extend_params[:id], extend_params[:time].to_f)
+	rescue => e
+		redirect_to root_path and flash[:error]="#{e}" and return
+	end
+		flash[:notice]="Your account has been extended!"
+                redirect_to store_path
+end
+
+def details
+	user = User.find(session[:user_id].to_i)
+	redirect_to root_path and return unless Account.exists?(vpn_params[:id])
+	@@account = Account.where("user_id=? and id=?", user.id, vpn_params[:id].to_i)
+	#@account = Account.joins(:user).joins(:server).where('user_id=? and expire>?', user.id, Time.now).select(:login, :password, :$
+	redirect_to root_path and return if @@account.empty?
+	session[:link]="established"
+	@@account = @@account[0]
+	@account = @@account
+	@@server = Server.find(@@account.server_id)
+	@@zipName = archiveName
+#send_file ("#{toSendPath(@zipName)}")
+#render 'details'
+end
+
+def sendZip
+	redirect_to root_path and return unless session[:link]
+#link = session[:link]
+	system "#{scriptPath} #{@@zipName} #{certUrl(@@server)} #{@@server.certname} #{@@server.ip} #{serverPort(@@server)} #{currentPath} #{packPath}"
+	send_file ("#{toSendPath(@@zipName)}")
+	#render :nothing => true
+#session.delete(:link)
+end
+
+
+
 
 def vpn_params
 params.permit(:id)
@@ -48,7 +99,11 @@ def my_id
 end 
 
 def buy_params
- params.require(:vpn).permit(:time, :location, :id)
+ params.require(:vpn).permit(:time, :location, :id, :utf8, :authenticity_token)
+end
+
+def extend_params
+ params.require(:extend).permit(:time, :id)
 end
 
 
