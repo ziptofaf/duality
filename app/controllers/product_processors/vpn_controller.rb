@@ -40,6 +40,7 @@ end
 def update
 	begin
 		@product = can_extend?(vpn_params[:id])
+		@account = vpn_params[:id]
 		#flash[:account_id] = (vpn_params[:id])
 	rescue => e
 		redirect_to root_path and return
