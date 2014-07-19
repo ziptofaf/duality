@@ -1,14 +1,14 @@
 require 'test_helper'
 
 class WalletControllerTest < ActionController::TestCase
-  test "should get add_funds" do
+  test "should require log-in - add_funds" do
     get :add_funds
-    assert_response :success
+    assert_response :redirect
   end
 
-  test "should get check_history" do
+  test "should require log-in - check_history" do
     get :check_history
-    assert_response :success
+    assert_response :redirect
   end
 
 end

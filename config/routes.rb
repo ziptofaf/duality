@@ -1,4 +1,12 @@
 Duality::Application.routes.draw do
+  get 'footer/what_is_vpn'
+
+  get 'footer/contact_us'
+
+  get 'footer/vpn_vs_proxy'
+
+  get 'footer/legals'
+
  #get 'errors/routing'
 
   match "profile", to: "profile#general", via: 'get'
@@ -22,6 +30,7 @@ Duality::Application.routes.draw do
   get "wallet/check_history"
   match '/wallet/add_funds', to: 'wallet#create', via: 'post'
   match '/signup', to: 'signup#new', via: 'get'
+  get 'signup/new'
   match '/signup', to: 'signup#create', via: 'post'
   resources :accounts
   resources :servers
@@ -34,8 +43,8 @@ Duality::Application.routes.draw do
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
  namespace :processors do
-  match '/listen/dogecoin', to: 'dogecoin#listen', via: 'get'
-  match '/listen/bitcoin', to: 'bitcoin#listen', via: 'get'
+  match '/listen/dogecoin', to: 'dogecoin#listen', via: 'post'
+  match '/listen/bitcoin', to: 'bitcoin#listen', via: 'post'
   match '/listen/paypal', to: 'paypal#listen', via: 'post'
   resources :dogecoin, only: [:index]
   resources :bitcoin, only: [:index]
@@ -50,6 +59,7 @@ Duality::Application.routes.draw do
   match "vpn/extend", to: "vpn#extend_account", via: 'post'
   get "vpn/sendZip"
  end
+ get 'errors/routing'
   # You can have the root of your site routed with "root"
   # root 'welcome#index'
 
@@ -101,6 +111,7 @@ Duality::Application.routes.draw do
   #     # (app/controllers/admin/products_controller.rb)
   #     resources :products
   #   end
+
 match '*a', :to => 'errors#routing', via: [:get, :post]
 
 end

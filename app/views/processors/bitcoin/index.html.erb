@@ -1,5 +1,5 @@
 <h1>Yolo!</h1>
-<%= @amount %>
+<%= number_to_currency(@amount) %>
 <%= @type %>
-<%= @url %>
+<%= link_to "Click here to pay", @url %>
 <%= flash[:error] %>

@@ -2,14 +2,14 @@
 
 one:
   account_id: 
-  bytes_sent: 1
-  bytes_received: 1
+  kilobytes_sent: 1
+  kilobytes_received: 1
   start: 2014-05-19 12:05:10
   end: 2014-05-19 12:05:10
 
 two:
   account_id: 
-  bytes_sent: 1
-  bytes_received: 1
+  kilobytes_sent: 1
+  kilobytes_received: 1
   start: 2014-05-19 12:05:10
   end: 2014-05-19 12:05:10

@@ -5,45 +5,45 @@ class AccountsControllerTest < ActionController::TestCase
     @account = accounts(:one)
   end
 
-  test "should get index" do
+  test "shouldnt get index without admin privileges" do
     get :index
-    assert_response :success
-    assert_not_nil assigns(:accounts)
+    assert_response :redirect
+    #assert_not_nil assigns(:accounts)
   end
 
-  test "should get new" do
+  test "shouldnt get new without admin privileges" do
     get :new
-    assert_response :success
+    assert_response :redirect
   end
 
-  test "should create account" do
-    assert_difference('Account.count') do
+  test "shouldnt create account without admin privileges" do
+    assert_no_difference('Account.count') do
       post :create, account: { expire: @account.expire, level: @account.level, login: @account.login, password: @account.password, server_id: @account.server_id, user_id: @account.user_id }
     end
 
-    assert_redirected_to account_path(assigns(:account))
+    assert_redirected_to login_path
   end
 
-  test "should show account" do
-    get :show, id: @account
-    assert_response :success
-  end
+#  test "shouldnt show account without admin privileges" do
+#    get :show, id: @account
+#    assert_response :redirect
+#  end
 
-  test "should get edit" do
+  test "shouldnt get edit without admin privileges" do
     get :edit, id: @account
-    assert_response :success
+    assert_response :redirect
   end
 
-  test "should update account" do
+  test "shouldnt update account without admin priviliges" do
     patch :update, id: @account, account: { expire: @account.expire, level: @account.level, login: @account.login, password: @account.password, server_id: @account.server_id, user_id: @account.user_id }
-    assert_redirected_to account_path(assigns(:account))
+    assert_redirected_to login_path
   end
 
   test "should destroy account" do
-    assert_difference('Account.count', -1) do
+    assert_no_difference('Account.count') do
       delete :destroy, id: @account
     end
 
-    assert_redirected_to accounts_path
+    assert_redirected_to login_path
   end
 end

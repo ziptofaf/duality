@@ -1,5 +1,5 @@
 <h1> Choose contract length, check if price matches and proceed to checkout</h1>
-<div class ="col-md-4 semicenter">
+<div class ="col-md-6 semicenter">
 <% if flash[:notice] %>
 <div class="alert alert-notice"><%= flash[:notice] %></div>
 <% end %>
@@ -21,4 +21,10 @@
 <%= f.hidden_field :id, :value => @product.id%>
 <br /><%= f.submit "Buy VPN account", :class => 'btn btn-default' %>
 <% end %>
+</div>
+<div class = "col-md-6 semicenter">
+By purchasing an account here you agree to the terms of service which can be viewed below:
+</div>
+<div class = "col-md-7 semicenter with_scrolling">
+<%= render 'product_processors/vpn/terms' %> 
 </div>

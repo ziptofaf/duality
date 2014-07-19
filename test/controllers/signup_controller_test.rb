@@ -1,14 +1,17 @@
 require 'test_helper'
 
 class SignupControllerTest < ActionController::TestCase
-  test "should get new" do
+#no idea how to do anything about thing that doesnt have a controller name due to using match
+
+  test "shouldnt get new without SSL" do
     get :new
-    assert_response :success
+    assert_response :redirect
   end
 
-  test "should get create" do
-    get :create
-    assert_response :success
+
+  test "shouldnt create a session without all data" do
+    post :create
+    assert_response :redirect
   end
 
 end

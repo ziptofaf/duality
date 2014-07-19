@@ -32,7 +32,7 @@ end
 
 def activity
 @user = User.find(session[:user_id])
-@logs = User.joins(:account_logs).where('user_id=?', @user.id).select(:kilobytes_sent, :kilobytes_received, :start, :end)
+@logs = User.joins(:account_logs).where('user_id=? and end>?' , @user.id, Time.now-7.days).select(:kilobytes_sent, :kilobytes_received, :start, :end)
 #redirect_to root_path and flash[:error]="You have no VPN accounts to check their activity" and return if @logs.empty?
 end
 

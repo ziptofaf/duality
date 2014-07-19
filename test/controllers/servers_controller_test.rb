@@ -5,45 +5,45 @@ class ServersControllerTest < ActionController::TestCase
     @server = servers(:one)
   end
 
-  test "should get index" do
+  test "shouldnt get index without admin privileges" do
     get :index
-    assert_response :success
-    assert_not_nil assigns(:servers)
+    assert_response :redirect
+    #assert_not_nil assigns(:servers)
   end
 
-  test "should get new" do
+  test "shouldnt get new without admin privileges" do
     get :new
-    assert_response :success
+    assert_response :redirect
   end
 
-  test "should create server" do
-    assert_difference('Server.count') do
+  test "should NOT create server without admin privileges" do
+    assert_no_difference('Server.count') do
       post :create, server: { capacity_current: @server.capacity_current, capacity_max: @server.capacity_max, cert_url: @server.cert_url, ip: @server.ip, location: @server.location }
     end
 
-    assert_redirected_to server_path(assigns(:server))
+    assert_redirected_to login_path
   end
 
-  test "should show server" do
-    get :show, id: @server
-    assert_response :success
-  end
+ # test "should show server" do
+ #   get :show, id: @server
+ #   assert_response :success
+ # end
 
-  test "should get edit" do
+  test "shouldnt get edit without admin priviliges" do
     get :edit, id: @server
-    assert_response :success
+    assert_response :redirect
   end
 
-  test "should update server" do
+  test "shouldnt update server without admin priviliges" do
     patch :update, id: @server, server: { capacity_current: @server.capacity_current, capacity_max: @server.capacity_max, cert_url: @server.cert_url, ip: @server.ip, location: @server.location }
-    assert_redirected_to server_path(assigns(:server))
+    assert_redirected_to login_path
   end
 
-  test "should destroy server" do
-    assert_difference('Server.count', -1) do
+  test "shouldnt destroy server" do
+    assert_no_difference('Server.count') do
       delete :destroy, id: @server
     end
 
-    assert_redirected_to servers_path
+    assert_redirected_to login_path
   end
 end

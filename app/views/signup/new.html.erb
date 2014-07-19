@@ -1,8 +1,7 @@
 
 <div class="center hero-unit">
+<div class="col-md-9 adjustToLeft">
 <h1> Sign up</h1>
-<div class="col-md-7 center">
-
 <% if @user.errors.any? %>
     <div class="alert alert-error">
       <h2><%= pluralize(@user.errors.count, "error") %> prohibited you from registering: </h2>
@@ -22,12 +21,12 @@
 </div><div class="form-group">
       <%= f.label :password_confirmation %>
       <%= f.password_field :password_confirmation, :class => 'form-control center' %>
+</div><div class="form-group">
       <%= f.label :craptcha, "Enter ONLY the numbers, in order, from the following: #{@craptcha}" %>
       <%= f.text_field :craptcha, :class => 'form-control center' %>
 </div>
 
       <%= f.submit "Sign up", :class => 'btn btn-default' %>
     <% end %></div>
-</div>
 </div>
 
