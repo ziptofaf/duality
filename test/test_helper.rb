@@ -13,3 +13,8 @@ class ActiveSupport::TestCase
 
   # Add more helper methods to be used by all tests here...
 end
+
+def sign_in(user)
+ session[:user_id]= user.id
+ session[:expires_at] = 30.minutes.from_now.to_s
+end

@@ -20,7 +20,7 @@ module VpnHelper
   error_message and raise 'Invalid contract time' unless time==3 or time==2 or time==1 or time==0.5
  end 
 
- def can_extend?(id)
+ def can_extend?(id) #this returns product that was used to buy an account
   error_message and raise 'Invalid_id' unless Account.exists?(id: id, user_id: session[:user_id])
   account = Account.find(id)
   error_message and raise 'Trying to access foreign account' unless session[:user_id]==account.user_id
