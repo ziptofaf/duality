@@ -9,6 +9,7 @@
       <th>Price</th>
       <th>Parameters</th>
       <th>Image</th>
+      <th>Details</th>
       <th></th>
       <th></th>
       <th></th>
@@ -24,6 +25,7 @@
         <td><%= product.price %></td>
         <td><%= product.parameters %></td>
         <td><%= product.image %></td>
+        <td><%= product.details %></td>
         <td><%= link_to 'Show', product %></td>
         <td><%= link_to 'Edit', edit_product_path(product) %></td>
         <td><%= link_to 'Destroy', product, method: :delete, data: { confirm: 'Are you sure?' } %></td>
