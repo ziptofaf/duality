@@ -9,7 +9,7 @@ class ProductProcessors::VpnControllerTest < ActionController::TestCase
   test "shouldnt let you see this if you use incorrect id" do
 	user = User.find_by email: "genius@genius.com"
    	sign_in user
-	get :new, :id=>1
+	get :new, :id=>0
 	assert_response :redirect
   end
   test "should let you see this if you use correct id" do

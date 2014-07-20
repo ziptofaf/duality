@@ -1,7 +1,7 @@
 ENV["RAILS_ENV"] ||= "test"
 require File.expand_path('../../config/environment', __FILE__)
 require 'rails/test_help'
-
+require 'capybara/rails'
 class ActiveSupport::TestCase
   ActiveRecord::Migration.check_pending!
 
@@ -17,4 +17,9 @@ end
 def sign_in(user)
  session[:user_id]= user.id
  session[:expires_at] = 30.minutes.from_now.to_s
+end
+
+class ActionDispatch::IntegrationTest
+  # Make the Capybara DSL available in all integration tests
+  include Capybara::DSL
 end

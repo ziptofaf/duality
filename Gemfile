@@ -50,3 +50,5 @@ gem 'bcrypt'
 
 gem 'mysql', group: [:production]
 gem 'chartkick'
+
+gem 'capybara', group: [:development, :test]
