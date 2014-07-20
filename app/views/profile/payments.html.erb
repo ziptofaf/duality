@@ -1,7 +1,7 @@
 <%= render 'menu' %>
 <div class = "container-right">
 <p> Your purchase history </p>
-<table class = "table table-bordered">
+<table class = "table table-bordered table-striped">
 <% @purchase.each do |purchase|   %>
 <tr>
 <td><%= purchase.name %></td>
