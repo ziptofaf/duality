@@ -1,3 +1,23 @@
-<%= @amount %>
-<%= @type %>
+<div class = "col-md-6 semicenter">
+Summary of payment:
+<table class = "table table-bordered table-striped">
+	<thead>
+	<tr>
+		<th>Description</th>
+		<th>Payment method</th>
+		<th>Price</th>
+	</tr>
+	</thead>
+	<tbody>
+<tr>
+<td>Add DualityNetwork Funds</td>
+<td>Paypal</td>
+<td><%= number_to_currency(@amount) %></td>
+</tr>
+</tbody>
+</table>
 <%= @button.html_safe %>
+<%= flash[:error] %>
+</div>
+
+

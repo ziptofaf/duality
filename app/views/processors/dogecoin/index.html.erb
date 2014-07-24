@@ -1,5 +1,21 @@
-<h1>Yolo!</h1>
-<%= number_to_currency(@amount) %>
-<%= @type %>
-<%= link_to "Click here to pay", @url.html_safe %>
+<div class = "col-md-6 semicenter">
+Summary of payment:
+<table class = "table table-bordered table-striped">
+	<thead>
+	<tr>
+		<th>Description</th>
+		<th>Payment method</th>
+		<th>Price</th>
+	</tr>
+	</thead>
+	<tbody>
+<tr>
+<td>Add DualityNetwork Funds</td>
+<td>Dogecoin</td>
+<td><%= number_to_currency(@amount) %></td>
+</tr>
+</tbody>
+</table>
+<%= link_to "Click here to pay", @url %>
 <%= flash[:error] %>
+</div>
