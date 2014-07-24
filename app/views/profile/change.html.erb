@@ -18,12 +18,20 @@
 <% end %>
 
 <%= form_for :profile, url: {action: "update"} do |f| %>
+<div class = "checkbox">
 <%= 'Enter your current password' %>
+</div>
 <%= f.password_field :current_password, :class => 'form-control center' %>
+<div class = "checkbox">
 <%= 'Enter your new password' %>
+</div>
 <%= f.password_field :password, :class => 'form-control center' %>
+<div class = "checkbox">
 <%= 'Repeat your new password' %>
+</div>
 <%= f.password_field :password_confirmation, :class => 'form-control center' %>
+<div class = "checkbox">
 <%=f.submit "Change password", :class => 'btn btn-default' %>
+</div>
 <% end %>
 </div>

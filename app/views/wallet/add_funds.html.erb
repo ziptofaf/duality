@@ -23,6 +23,6 @@
 <%= f.text_field :val  %><br />
 <%= f.label :method, 'Payment method' %>
 <%= f.select :payment_method, @array, :prompt => 'Select One' %>
-<br /><%=f.submit %>
+<br /><%=f.submit "Proceed to checkout", :class => 'btn btn-default' %>
 <% end %>
 </div>

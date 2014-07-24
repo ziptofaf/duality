@@ -22,7 +22,8 @@
       <%= f.label :password_confirmation %>
       <%= f.password_field :password_confirmation, :class => 'form-control center' %>
 </div><div class="form-group">
-      <%= f.label :craptcha, "Enter ONLY the numbers, in order, from the following: #{@craptcha}" %>
+      <%= f.label :craptcha, "Enter ONLY the numbers, in order, from the following:" %>
+      <%= image_tag('craptcha/craptcha1.jpg', :title=>'craptcha', :alt=>'craptcha') %>
       <%= f.text_field :craptcha, :class => 'form-control center' %>
 </div>
 
