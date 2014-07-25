@@ -8,6 +8,7 @@ def index
 ipn = "http://dualitynetwork.com/processors/listen/bitcoin"
 processor_id=(Processor.find_by name: "bitcoin").id
   error_message and redirect_to root_path and return unless (flash[:amount] && flash[:type]=="bitcoin")
+    @url = "placeholder" and @type="bitcoin" and @amount=(flash[:amount].to_s.split(',').join('.').to_f.round(2)) and return if Rails.env.development? or Rails.env.test?
     json_hash=create_a_payment_url(flash[:amount], "bitcoin", ipn)
     @url=json_hash["url"].html_safe
     insert_into_db(json_hash, flash[:amount], session[:user_id], processor_id)
