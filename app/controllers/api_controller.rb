@@ -31,7 +31,7 @@ respond_to :json
   end
 
   def api_params
-   params.permit(:login, :password, :api_key, :format, :server_id)
+   params.permit(:email, :login, :password, :api_key, :format, :server_id)
   end
   
   def logs_params
