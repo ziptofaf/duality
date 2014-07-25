@@ -10,3 +10,5 @@ processors = Processor.create([{ name: 'dogecoin', usable: 1}, { name: 'bitcoin'
 { name: 'paypal', usable: 1}])
 
 product_processors = ProductProcessor.create([{name: 'vpn', usable: 1},{name: 'placeholder', usable: 0}])
+
+pool = ServerPool.create([{name: 'basic'}, {name: 'medium'}, {name: 'advanced'}, {name: 'extreme'}])
