@@ -18,7 +18,7 @@ test "buy a vpn" do
 	click_link "Buy!"
 	assert page.has_content?('Choose contract length'), "didn't redirect to a correct website"
 	choose "2 weeks"
-	select "russia", :from => 'Location'
+	#select "russia", :from => 'Location'
 	click_button "Buy VPN account"
 	assert page.has_content?('Your account has been created!'), "invalid flash message"
 	visit "/profile/payments"

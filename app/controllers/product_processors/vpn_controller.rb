@@ -7,12 +7,7 @@ def new
 	@product = Product.find(vpn_params[:id])
         @level=parameters_to_level(@product.parameters)
 	(redirect_to root_path and error_message and return) if @level==0
-	@list = Server.where("level=?", @level).select(:location).group("location")	
-	@locations = Array.new	
-	@list.each do |entry|
-	@locations << entry.location
-	end 
-	
+		
 end
 
 
@@ -22,13 +17,13 @@ def create
 	(redirect_to root_path and error_message and return) unless Product.exists?(id: buy_params[:id], ProductProcessor_id: (@@my_id.to_i))
 	begin
                 @product = Product.find(buy_params[:id])
-                level = parameters_to_level(@product.parameters)
-                server = find_a_server(buy_params[:location], level)
+                pool_level = parameters_to_level(@product.parameters)
+                server_pool = ServerPool.find(pool_level)
                 check_if_correct(buy_params[:time].to_f)
                 price = @product.price * buy_params[:time].to_f
                 pay(price)
 		log_payment(@product.id, price)
-		create_account(server, @product.id, buy_params[:time].to_f)
+		create_account(server_pool, @product.id, buy_params[:time].to_f)
         rescue => e
                 redirect_to store_path and flash[:error]= "#{e}" and return
         end
@@ -100,7 +95,7 @@ def my_id
 end 
 
 def buy_params
- params.require(:vpn).permit(:time, :location, :id, :utf8, :authenticity_token)
+ params.require(:vpn).permit(:time, :id, :utf8, :authenticity_token)
 end
 
 def extend_params

@@ -105,8 +105,6 @@ def prepare_an_account(prod)
 	account = Account.find_by login: "aabbcc"
 	user = User.find_by email: "genius@genius.com"
 	account.update_attribute :user_id, user.id
-	server = Server.where("location = ? and level = ?", "russia", 1).first
-	account.update_attribute :server_id, server.id
 	account.update_attribute :product_id, prod.id
 	return account
 end

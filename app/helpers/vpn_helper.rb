@@ -1,13 +1,6 @@
 require 'securerandom'
 module VpnHelper
-  def find_a_server(location, level=1)
-   server = (Server.where('location = ? AND level = ?', location,level)).order(:capacity_current).limit(1) 
-   raise 'Invalid location' if server.size==0
-    server.each do |s1|
-     return s1
-    end
-  end
-  
+    
   def pay(amount)
    error_message and raise 'THIS MUST BE POSITIVE' unless amount>0 
    flash[:error]="Insufficient funds" and raise 'Insufficient funds' if balance-amount<0
@@ -38,13 +31,12 @@ module VpnHelper
   account.update_attribute :expire, new_date
  end
 
- def create_account(server, product_id, expire_value)
+ def create_account(pool, product_id, expire_value)
   account=Account.new
   account.login = random_hash
   account.password = random_hash
-  account.server_id = server.id
+  account.server_pool_id = pool.id
   account.user_id = session[:user_id]
-  account.level = server.level
   account.product_id = product_id
   account.active = 0
   if expire_value==0.5
@@ -79,6 +71,11 @@ module VpnHelper
 	return 4 if parameter=='extreme'
 	raise 'wrong parameters!' and return 0
  end
-
+ def pool_to_level (pool)
+	return "Basic" if pool==1
+	return "Medium" if pool==2
+	return "Advanced" if pool==3
+	return "Extreme" if pool==4
+ end
 end
 

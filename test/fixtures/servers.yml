@@ -3,32 +3,25 @@
 one:
   ip: 11.11.11.11
   location: russia
-  capacity_max: 50
   capacity_current: 0
   cert_url: certs/cer0.crt
-  level: 1
+  server_pool_id: 1
 
 two:
   ip: 22.22.22.22
   location: poland
-  capacity_max: 50
   capacity_current: 0
   cert_url: certs/cer1.crt
-  level: 2
-
+  server_pool_id: 2
 three: 
   ip: 21.11.11.11
   location: russia
-  capacity_max: 50
   capacity_current: 0
   cert_url: certs/cer01.crt
-  level: 2
-
+  server_pool_id: 2
 four: 
   ip: 23.11.11.11
   location: poland
-  capacity_max: 50
   capacity_current: 0
   cert_url: certs/cer201.crt
-  level: 1
-
+  server_pool_id: 1

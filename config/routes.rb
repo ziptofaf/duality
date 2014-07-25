@@ -22,7 +22,7 @@ Duality::Application.routes.draw do
   resources :products 
   get "profile/activity"
   #match "api/client_side", to: 'api#client_side', via: 'get'
-  match "api/client_side", to: 'api#client_side', via: 'post', :defaults => { :format => 'json' }
+  match "api/client_side", to: 'api#client_side', via: 'get', :defaults => { :format => 'json' }
   match "api/server_side", to: 'api#server_side', via: 'post', :defaults => { :format => 'json' }
   match "api/check_ip", to: 'api#check_ip', via: 'get', :defaults => { :format => 'json' }
   match "api/disconnect", to: 'api#disconnect', via: 'post', :defaults => { :format => 'json'}

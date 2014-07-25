@@ -5,10 +5,10 @@
     <tr>
       <th>Ip</th>
       <th>Location</th>
-      <th>Capacity max</th>
+      <th>Server Pool</th>
       <th>Capacity current</th>
       <th>Cert url</th>
-      <th>Level</th>
+      <th>Cername</th>
       <th></th>
       <th></th>
       <th></th>
@@ -20,11 +20,10 @@
       <tr>
         <td><%= server.ip %></td>
         <td><%= server.location %></td>
-        <td><%= server.capacity_max %></td>
+        <td><%= server.server_pool_id %></td>
         <td><%= server.capacity_current %></td>
         <td><%= server.cert_url %></td>
-        <td><%= server.level %></td>
-	<td><%= server.certname %></td>
+        <td><%= server.certname %></td>
         <td><%= link_to 'Show', server %></td>
         <td><%= link_to 'Edit', edit_server_path(server) %></td>
         <td><%= button_to 'Destroy', server, method: :delete, data: { confirm: 'Are you sure?' } %></td>

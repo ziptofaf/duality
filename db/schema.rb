@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140720165020) do
+ActiveRecord::Schema.define(version: 20140725160803) do
 
   create_table "account_logs", force: true do |t|
     t.integer  "account_id"
@@ -29,18 +29,17 @@ ActiveRecord::Schema.define(version: 20140720165020) do
   create_table "accounts", force: true do |t|
     t.string   "login"
     t.string   "password"
-    t.integer  "level"
     t.datetime "expire"
     t.integer  "user_id"
-    t.integer  "server_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "product_id"
     t.integer  "active"
+    t.integer  "server_pool_id"
   end
 
   add_index "accounts", ["product_id"], name: "index_accounts_on_product_id"
-  add_index "accounts", ["server_id"], name: "index_accounts_on_server_id"
+  add_index "accounts", ["server_pool_id"], name: "index_accounts_on_server_pool_id"
   add_index "accounts", ["user_id"], name: "index_accounts_on_user_id"
 
   create_table "payments", force: true do |t|
@@ -105,17 +104,24 @@ ActiveRecord::Schema.define(version: 20140720165020) do
 
   add_index "recoveries", ["user_id"], name: "index_recoveries_on_user_id"
 
+  create_table "server_pools", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "servers", force: true do |t|
     t.string   "ip"
     t.string   "location"
-    t.integer  "capacity_max"
     t.integer  "capacity_current"
     t.string   "cert_url"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "level"
     t.string   "certname"
+    t.integer  "server_pool_id"
   end
+
+  add_index "servers", ["server_pool_id"], name: "index_servers_on_server_pool_id"
 
   create_table "users", force: true do |t|
     t.string   "email"

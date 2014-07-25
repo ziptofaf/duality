@@ -9,7 +9,7 @@ class ProfileController < ApplicationController
   end
 
   def vpns
-	@vpns = Account.joins(:server).where("user_id = ? AND expire > ?", session[:user_id], Time.now).select(:login, :password, :expire, :ip, :location, :active, "accounts.id")
+	@vpns = Account.joins(:server_pool).where("user_id = ? AND expire > ?", session[:user_id], Time.now).select(:login, :password, :expire, :active, "accounts.id", "server_pool_id")
   end
   def change
   	@user = User.find(session[:user_id])

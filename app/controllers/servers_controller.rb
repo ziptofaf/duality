@@ -70,6 +70,6 @@ class ServersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def server_params
-      params.require(:server).permit(:ip, :location, :capacity_max, :capacity_current, :cert_url, :level, :certname)
+      params.require(:server).permit(:ip, :location, :capacity_current, :cert_url, :certname, :server_pool_id)
     end
 end

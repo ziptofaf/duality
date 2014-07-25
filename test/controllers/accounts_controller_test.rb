@@ -18,7 +18,7 @@ class AccountsControllerTest < ActionController::TestCase
 
   test "shouldnt create account without admin privileges" do
     assert_no_difference('Account.count') do
-      post :create, account: { expire: @account.expire, level: @account.level, login: @account.login, password: @account.password, server_id: @account.server_id, user_id: @account.user_id }
+      post :create, account: { expire: @account.expire, login: @account.login, password: @account.password, server_pool_id: 1, user_id: @account.user_id }
     end
 
     assert_redirected_to login_path
@@ -35,7 +35,7 @@ class AccountsControllerTest < ActionController::TestCase
   end
 
   test "shouldnt update account without admin priviliges" do
-    patch :update, id: @account, account: { expire: @account.expire, level: @account.level, login: @account.login, password: @account.password, server_id: @account.server_id, user_id: @account.user_id }
+    patch :update, id: @account, account: { expire: @account.expire, login: @account.login, password: @account.password, server_pool_id: 1, user_id: @account.user_id }
     assert_redirected_to login_path
   end
 

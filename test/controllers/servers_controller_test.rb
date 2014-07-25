@@ -18,7 +18,7 @@ class ServersControllerTest < ActionController::TestCase
 
   test "should NOT create server without admin privileges" do
     assert_no_difference('Server.count') do
-      post :create, server: { capacity_current: @server.capacity_current, capacity_max: @server.capacity_max, cert_url: @server.cert_url, ip: @server.ip, location: @server.location }
+      post :create, server: { capacity_current: @server.capacity_current, server_pool_id: 1, cert_url: @server.cert_url, ip: @server.ip, location: @server.location }
     end
 
     assert_redirected_to login_path
@@ -35,7 +35,7 @@ class ServersControllerTest < ActionController::TestCase
   end
 
   test "shouldnt update server without admin priviliges" do
-    patch :update, id: @server, server: { capacity_current: @server.capacity_current, capacity_max: @server.capacity_max, cert_url: @server.cert_url, ip: @server.ip, location: @server.location }
+    patch :update, id: @server, server: { capacity_current: @server.capacity_current, server_pool: 1, cert_url: @server.cert_url, ip: @server.ip, location: @server.location }
     assert_redirected_to login_path
   end
 
