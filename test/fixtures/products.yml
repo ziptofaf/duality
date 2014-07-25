@@ -13,3 +13,12 @@ two:
   ProductProcessor_id: 1
   price: 5.99
   parameters: medium
+
+three:
+  name: Pro VPN
+  description: test_if_description_shows
+  details: test_if_details_show
+  ProductProcessor_id: 1
+  price: 8.99
+  parameters: basic
+  id: 1

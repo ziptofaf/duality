@@ -3,6 +3,7 @@ require 'test_helper'
 
 class CanLoginTest < ActionDispatch::IntegrationTest
 test "login and access profile" do
+	visit "/logout"
 	visit "/login"
 	assert page.has_content?('Sign in'), "Invalid content on the page!"
 	fill_in('session_email', :with=> "genius@genius.com")
