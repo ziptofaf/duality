@@ -61,9 +61,22 @@ end
 def details
 	user = User.find(session[:user_id].to_i)
 	redirect_to root_path and return unless Account.exists?(vpn_params[:id])
+<<<<<<< HEAD
 	@account = Account.where("user_id=? and id=?", user.id, vpn_params[:id].to_i)
 	@servers = Server.where("server_pool=?", @account.server_pool)
 	
+=======
+	@@account = Account.where("user_id=? and id=?", user.id, vpn_params[:id].to_i)
+	#@account = Account.joins(:user).joins(:server).where('user_id=? and expire>?', user.id, Time.now).select(:login, :password, :$
+	redirect_to root_path and return if @@account.empty?
+	session[:link]="established"
+	@@account = @@account[0]
+	@account = @@account
+	#@@server = Server.find(@@account.server_id)
+	@@zipName = archiveName
+#send_file ("#{toSendPath(@zipName)}")
+#render 'details'
+>>>>>>> b45f0dfbee47849bb5759f71cf7a6b73e4231af7
 end
 
 def sendZip

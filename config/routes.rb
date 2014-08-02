@@ -26,6 +26,7 @@ Duality::Application.routes.draw do
   match "api/server_side", to: 'api#server_side', via: 'post', :defaults => { :format => 'json' }
   match "api/check_ip", to: 'api#check_ip', via: 'get', :defaults => { :format => 'json' }
   match "api/disconnect", to: 'api#disconnect', via: 'post', :defaults => { :format => 'json'}
+  match "api/connect", to: 'api#connect', via: 'post', :defaults => { :format => 'json'}
   get "wallet/add_funds"
   get "wallet/check_history"
   match '/wallet/add_funds', to: 'wallet#create', via: 'post'
