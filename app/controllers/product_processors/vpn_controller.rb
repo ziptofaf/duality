@@ -61,14 +61,24 @@ end
 def details
 	user = User.find(session[:user_id].to_i)
 	redirect_to root_path and return unless Account.exists?(vpn_params[:id])
-	@account = Account.where("user_id=? and id=?", user.id, vpn_params[:id].to_i)
-	@servers = Server.where("server_pool=?", @account.server_pool)
+	@account = Account.where("user_id=? and id=?", user.id, vpn_params[:id].to_i).first
+	#things like this should seriously be cached!
+	servers = Server.where("server_pool_id=?", @account.server_pool_id)
+	@servers = Array.new
+	servers.each do |server|
+		@servers << "#{server.id} - #{server.location}"
+	end 
 end
 
 def sendZip
-	redirect_to root_path and return unless session[:link]
-	system "#{scriptPath} #{@@zipName} #{certUrl(@@server)} #{@@server.certname} #{@@server.ip} #{serverPort(@@server)} #{currentPath} #{packPath}"
-	send_file ("#{toSendPath(@@zipName)}")
+	zipName = archiveName
+	server_name = zip_params[:server].split('-')
+	server_name = server_name[0].to_i
+	redirect_to profile_path and error_message and return unless Server.exists?(server_name)
+	server = Server.find(server_name) 
+	system "#{scriptPath} #{zipName} #{certUrl(server)} #{server.certname} #{server.ip} #{serverPort(server)} #{currentPath} #{packPath}"
+	send_file ("#{toSendPath(zipName)}")
+
 end
 
 
@@ -76,6 +86,10 @@ end
 
 def vpn_params
 params.permit(:id)
+end
+
+def zip_params
+params.require(:zip).permit(:server, :protocol)
 end
 
 def my_id

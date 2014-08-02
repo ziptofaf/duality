@@ -59,7 +59,7 @@ Duality::Application.routes.draw do
   get "vpn/extend/:id" => "vpn#update" 
   get 'vpn/details/:id' => "vpn#details"
   match "vpn/extend", to: "vpn#extend_account", via: 'post'
-  get "vpn/sendZip"
+  post "vpn/sendZip"
  end
  get 'errors/routing'
   # You can have the root of your site routed with "root"

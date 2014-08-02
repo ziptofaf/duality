@@ -4,4 +4,9 @@ Login:
 Password:
 <%= @account.password %><br />
 
-<%= link_to "Click here to download zip archive with files necessary to connect to vpn", product_processors_vpn_sendZip_path %>
+<%= form_for :zip, :url=>product_processors_vpn_sendZip_path do |f| %>
+<%= f.label :server, "Choose server you wish to connect to from the list" %>
+<%= f.select :server, @servers, :prompt => "Select one" %>
+<br />
+<%= f.submit "Download zip archive with files necessary to connect to vpn", :class => 'btn btn-default' %>
+<% end %>
