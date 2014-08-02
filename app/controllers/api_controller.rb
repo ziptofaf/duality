@@ -20,16 +20,24 @@ respond_to :json
   server = Server.find(api_params[:server_id])
   @response = {'status'=>'failure'} and return unless account && server && account.server_pool_id>=server.server_pool_id && account.expire>Time.now && account.password==api_params[:password] && account.active<=1
   @response = {'status'=>'success'}
-  begin
-  account.active+=1
-  account.save!
-  server.capacity_current+=1
-  server.save!
-  rescue => e
-	logger.fatal "#{e}"
-  end
   end
 
+  def connect
+    @response = {'status'=>'connection failure'} and return unless api_params[:login] && api_params[:api_key]=='0mfd1INmx86TAzY3U25O' && api_params[:server_id]
+    account = Account.find_by login: api_params[:login]
+    server = Server.find(api_params[:server_id])
+   begin
+    account.active+=1
+    account.save!
+    server.capacity_current+=1
+    server.save!
+    @response= {'status'=>'connection success'}
+  rescue => e
+    logger.fatal "#{e}"
+    @response = {'status'=>'connection failure'}
+  end
+
+  end
   def check_ip
    @response = {'ip'=> request.remote_ip}
   end

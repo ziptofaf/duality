@@ -67,7 +67,7 @@ def details
 	session[:link]="established"
 	@@account = @@account[0]
 	@account = @@account
-	@@server = Server.find(@@account.server_id)
+	#@@server = Server.find(@@account.server_id)
 	@@zipName = archiveName
 #send_file ("#{toSendPath(@zipName)}")
 #render 'details'
