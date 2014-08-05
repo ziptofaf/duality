@@ -1,0 +1,52 @@
+Models used are:
+Note: all of them have an integer self-incrementing id field starting from 1.
+
+User - holds an email, active level (level 2 is necessary to access admin features, after registering you are at 1), password digest
+(which uses standard ruby bcrypt library atm) and a balance (in decimal form so it's kinda prone to bugs, be sure to always round it to
+two places just in case - in theory db does it in one of the migrations but better safe than sorry).
+used in: Everywhere apart from store, static and footer controllers.
+
+Server - used for vpn_controller mostly. Fields are location, IP, server_pool, capacity_current (aka how many users
+are connected to it atm), certificate path+name (starting from Rails.root) and certname (which can be automatically deduced from
+certificate path if you leave it empty). The reason for the last one is that desktop vpn client can't deduce it yet and needs additional
+field with that name.
+used in: vpn_controller
+
+Server_pool - by default 4 of them are in the db/seeds.rb with ids going from 1-4 and names being basic, medium, advanced, extreme.
+Each server and account has to be in one of them. Eg. account with server_pool 1 has access to all vpn servers with the same pool.
+used in: vpn_controller, servers_controller, accounts_controller
+
+Account - holds a login (randomly generated upon creation, should be unique), password (non-hashed one due to OpenVPN limitations),
+Expire date, active (aka if someone is connected to it), user_id, server_pool_id and product_id used to purchase it.
+used in: vpn_controller, profile_controller
+
+Account_log - remote - holds unique IP being used to connect to the vpn, hour of start and finish of the connection (start and
+end fields), account_id of which account connected to it, kilobytes_sent and kilobytes_received (note - both are what SERVER
+has received/sent, it's vice versa for the client).
+used_in: API_controller
+
+Processor - used to hold a name of payment processor. Such as dogecoin/bitcoin/paypal/litecoin and so on. Has 2 fields - name and if its
+available to use.
+Used in: wallet_controller, processors/*
+
+Payment - holds unique data necessary to check if payment has arrived. Fields are processor_id, user_id, amount (in decimal form),
+status (generally should be pending, complete or cancelled), tx (unique chunk of data used to identify the transaction,
+often used by external APIs and necessary in Instant Payment Notifiers).
+used_in: Payment_processor controller, profile_controller
+
+Product - has a name field, image path (starting from assets/images), description (visible directly on the store,
+it's considered html safe), details (shows after clicking on a product, it's basically more detailed description), product_processor_id
+(aka what should parse its purchase) and parameters (additional data which will be shoved to its product_processor), price
+(per month if duration applies).
+used in: store_controller, products_controller, any of the ProductProcessor_controllers
+
+Purchase - name - of product that was bought, value (aka price), date of the transaction, user_id
+used_in: profile_controller, product_processor controllers
+
+ProductProcessor (these caps in name are actually important)- has a unique name field (for example "VPN") and  usable field (1 if
+it's active, 0 otherwise).
+used_in: store_controller (after clicking on a product), product_controller.
+
+Recovery - holds data necessary to recover lost password. That is user_id, expire
+  and a code field (basically a token needed to reset password sent to a user via email).
+used_in: support_controller

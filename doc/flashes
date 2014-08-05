@@ -1,3 +1,3 @@
-flash[:error] - will be only used locally.
+flash[:error] - used to show if something went wrong.
 flash[:notice] - used in between controllers communication.
 flash[:type] and [:amount] are used to transport wallet-input data
