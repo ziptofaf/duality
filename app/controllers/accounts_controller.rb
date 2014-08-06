@@ -1,6 +1,7 @@
 class AccountsController < ApplicationController
   before_action :admin_authorize
   before_action :set_account, only: [:show, :edit, :update, :destroy]
+
   # GET /accounts
   # GET /accounts.json
   def index
@@ -71,4 +72,5 @@ class AccountsController < ApplicationController
     def account_params
       params.require(:account).permit(:login, :password, :expire, :active, :user_id, :server_pool_id, :product_id)
     end
+  
 end

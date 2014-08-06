@@ -11,7 +11,7 @@ respond_to :json
      else
    return
    end
-  return     
+  return
   end
 
   def server_side #REFACTOR FUCKING VARIABLE NAME TO ACCOUNT INSTEAD OF USER
@@ -45,9 +45,10 @@ respond_to :json
   def api_params
    params.permit(:email, :login, :password, :api_key, :format, :server_id)
   end
-  
+
   def logs_params
    params.permit(:username, :kilobytes_sent, :kilobytes_received, :remote_ip, :api_key, :session_length, :server_id)
+   
   end
 
  def disconnect

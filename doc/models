@@ -37,13 +37,13 @@ used_in: Payment_processor controller, profile_controller
 Product - has a name field, image path (starting from assets/images), description (visible directly on the store,
 it's considered html safe), details (shows after clicking on a product, it's basically more detailed description), product_processor_id
 (aka what should parse its purchase) and parameters (additional data which will be shoved to its product_processor), price
-(per month if duration applies).
+(per month if duration applies). Note: ProductProcessor_id - this is the name of that field, it has an error and is used instead of product_processor_id.
 used in: store_controller, products_controller, any of the ProductProcessor_controllers
 
 Purchase - name - of product that was bought, value (aka price), date of the transaction, user_id
 used_in: profile_controller, product_processor controllers
 
-ProductProcessor (these caps in name are actually important)- has a unique name field (for example "VPN") and  usable field (1 if
+ProductProcessor - has a unique name field (for example "VPN") and  usable field (1 if
 it's active, 0 otherwise).
 used_in: store_controller (after clicking on a product), product_controller.
 
