@@ -3,10 +3,10 @@
 one:
   name: Basic VPN
   description: MyText
-  ProductProcessor_id: 1 
+  ProductProcessor_id: 1
   price: 2.99
   parameters: basic
-
+  
 two:
   name: Medium VPN
   description: MyText

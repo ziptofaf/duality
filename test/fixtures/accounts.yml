@@ -4,17 +4,23 @@ one:
   login: MyString
   password: MyString
   expire: 2014-03-10 22:58:20
-  user_id: 
+  user_id:
   server_pool_id: 1
 two:
   login: MyString
   password: MyString
   expire: 2014-03-10 22:58:20
-  user_id:  
+  user_id:
   server_pool_id: 1
 three:
   login: aabbcc
   password: asdlsada
+  expire: 2019-05-15 22:59:20
+  user_id:
+  server_pool_id: 1
+four:
+  login: shouldntsee
+  password: shouldntsee
   expire: 2019-05-15 22:59:20
   user_id:
   server_pool_id: 1
