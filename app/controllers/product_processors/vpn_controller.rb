@@ -62,6 +62,7 @@ def details
 	user = User.find(session[:user_id].to_i)
 	redirect_to root_path and return unless Account.exists?(vpn_params[:id])
 	@account = Account.where("user_id=? and id=?", user.id, vpn_params[:id].to_i).first
+	redirect_to root_path and return unless @account
 	#things like this should seriously be cached!
 	servers = Server.where("server_pool_id=?", @account.server_pool_id).group_by {|u| u.location}
 	@servers = Array.new
