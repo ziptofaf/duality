@@ -1,17 +1,17 @@
 require 'securerandom'
 module VpnHelper
-    
+
   def pay(amount)
-   error_message and raise 'THIS MUST BE POSITIVE' unless amount>0 
+   error_message and raise 'THIS MUST BE POSITIVE' unless amount>0
    flash[:error]="Insufficient funds" and raise 'Insufficient funds' if balance-amount<0
    user = User.find(session[:user_id])
    funds = user.balance - amount
    user.update_attribute :balance, funds
   end
- 
+
  def check_if_correct(time)
   error_message and raise 'Invalid contract time' unless time==3 or time==2 or time==1 or time==0.5
- end 
+ end
 
  def can_extend?(id) #this returns product that was used to buy an account
   error_message and raise 'Invalid_id' unless Account.exists?(id: id, user_id: session[:user_id])
@@ -21,7 +21,7 @@ module VpnHelper
   product = Product.find(account.product_id)
   return product
  end
- 
+
  def extend_this_account(id, length)
   error_message and raise 'Invalid_id' unless Account.exists?(id: id)
   account = Account.find(id)
@@ -40,7 +40,7 @@ module VpnHelper
   account.product_id = product_id
   account.active = 0
   if expire_value==0.5
-    account.expire = 2.weeks.from_now 
+    account.expire = 2.weeks.from_now
   else
     account.expire = expire_value.to_i.months.from_now
   end
@@ -58,7 +58,7 @@ module VpnHelper
   purchase.name = product.name + " - extending" if extending==true
   error_message and raise 'couldnt save the log record' unless purchase.save
  end
- 
+
  def random_hash
   random_string = SecureRandom.base64(30)
   random_string.split(/[+,=\/]/).join
@@ -77,5 +77,9 @@ module VpnHelper
 	return "Advanced" if pool==3
 	return "Extreme" if pool==4
  end
+ def find_least_users (location, server_pool)
+   raise 'Server doesnt exist' unless Server.exists?(:location => location)
+   server = Server.where('location=? and server_pool_id=?', location, server_pool).order(capacity_current: :asc).first
+   return server
+ end
 end
-

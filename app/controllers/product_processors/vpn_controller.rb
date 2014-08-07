@@ -7,12 +7,12 @@ def new
 	@product = Product.find(vpn_params[:id])
         @level=parameters_to_level(@product.parameters)
 	(redirect_to root_path and error_message and return) if @level==0
-		
+
 end
 
 
 def create
-	(flash[:error]="You need to fill all fields before proceeding" and redirect_to store_path and return) unless buy_params[:time] and buy_params[:location]!="" and buy_params[:id]	
+	(flash[:error]="You need to fill all fields before proceeding" and redirect_to store_path and return) unless buy_params[:time] and buy_params[:location]!="" and buy_params[:id]
 	my_id
 	(redirect_to root_path and error_message and return) unless Product.exists?(id: buy_params[:id], ProductProcessor_id: (@@my_id.to_i))
 	begin
@@ -29,7 +29,7 @@ def create
         end
                 flash[:notice]="Your account has been created!"
 		redirect_to store_path
-		 
+
 end
 
 def update
@@ -48,7 +48,7 @@ def extend_account
 		product = can_extend?(extend_params[:id])
 		check_if_correct(extend_params[:time].to_f)
 		to_pay = (extend_params[:time].to_f * product.price.to_f).round(2)
-		pay(to_pay) 
+		pay(to_pay)
 		log_payment(product.id, to_pay, true)
 		extend_this_account(extend_params[:id], extend_params[:time].to_f)
 	rescue => e
@@ -63,22 +63,24 @@ def details
 	redirect_to root_path and return unless Account.exists?(vpn_params[:id])
 	@account = Account.where("user_id=? and id=?", user.id, vpn_params[:id].to_i).first
 	#things like this should seriously be cached!
-	servers = Server.where("server_pool_id=?", @account.server_pool_id)
+	servers = Server.where("server_pool_id=?", @account.server_pool_id).group_by {|u| u.location}
 	@servers = Array.new
 	servers.each do |server|
-		@servers << "#{server.id} - #{server.location}"
-	end 
+		@servers << "#{server[0]}"
+	end
 end
 
 def sendZip
+	begin
 	zipName = archiveName
-	server_name = zip_params[:server].split('-')
-	server_name = server_name[0].to_i
-	redirect_to profile_path and error_message and return unless Server.exists?(server_name)
-	server = Server.find(server_name) 
+	#server_name = zip_params[:server].split('-')
+	#server_name = server_name[0].to_i
+	server = find_least_users(zip_params[:server], zip_params[:server_pool])
 	system "#{scriptPath} #{zipName} #{certUrl(server)} #{server.certname} #{server.ip} #{serverPort(server)} #{currentPath} #{packPath}"
 	send_file ("#{toSendPath(zipName)}")
-
+  rescue => e
+		redirect_to root_path and error_message and return
+  end
 end
 
 
@@ -89,13 +91,13 @@ params.permit(:id)
 end
 
 def zip_params
-params.require(:zip).permit(:server, :protocol)
+params.require(:zip).permit(:server, :protocol, :server_pool)
 end
 
 def my_id
 @@my_id=ProductProcessor.find_by name: "vpn"
 @@my_id=@@my_id.id
-end 
+end
 
 def buy_params
  params.require(:vpn).permit(:time, :id, :utf8, :authenticity_token)
