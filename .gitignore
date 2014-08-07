@@ -7,6 +7,7 @@
 # Ignore bundler config.
 /.bundle
 /zipPacks
+/helper_scripts/*.crt
 /public/assets
 # Ignore the default SQLite database.
 /db/*.sqlite3
