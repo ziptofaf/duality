@@ -12,6 +12,10 @@ body {
   padding-top: 0px;
   margin-right: 10px;
   margin-left: 10px;
+  background-image: image-url("circuit.jpg");
+  background-repeat:no-repeat;
+  background-attachment:fixed;
+  background-position:center;
 }
 
 section {
@@ -100,7 +104,7 @@ p {
     background-color: #f2dede;
     border-color: #eed3d7;
     color: #b94a48;
-   
+
  }
 .alert-notice {
     background-color: #dff0d8;
@@ -137,7 +141,7 @@ margin-top:1.3cm;
     #color: #00ff00;
     line-height:200%;
     #overflow : hidden;
-    #padding-bottom:70px; 
+    #padding-bottom:70px;
 }
 .container-right {
     #background-color: black;
@@ -148,9 +152,9 @@ margin-top:1.3cm;
     float:right;
     #z-index: -2;
     padding-bottom:135px;   /* Height of the footer */
-    margin-top: 5px    
+    margin-top: 5px
 }
-.table-striped>tbody>tr:nth-child(odd)>td, 
+.table-striped>tbody>tr:nth-child(odd)>td,
 .table-striped>tbody>tr:nth-child(odd)>th {
    background-color: #cecece;
  }
@@ -220,7 +224,7 @@ th, td {
    bottom:0;
    width:970px;
    height:95px;   /* Height of the footer */
-   padding-top: 15px;  
+   padding-top: 15px;
    padding-left: 10px;
    padding-right: 10px;
    color: white;
@@ -230,11 +234,10 @@ th, td {
    right:0;
    background-image: image-url("footer.png");
    background-repeat: no-repeat;
+   letter-spacing: 1.5px;
 }
 
 .container {
    min-height:100%;
    position:relative;
 }
-
-

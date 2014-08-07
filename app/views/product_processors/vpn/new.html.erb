@@ -17,12 +17,12 @@
 <br /><%= f.radio_button :time, '3' %>
 <%= f.label :time, '3 months', :value => '3' %>
 <%= f.hidden_field :id, :value => @product.id%>
-<br /><%= f.submit "Buy VPN account", :class => 'btn btn-default' %>
+<br /><%= f.submit "Buy VPN account", :class => 'btn btn-default', data: { confirm: "Are you sure?" } %>
 <% end %>
 </div>
 <div class = "col-md-6 semicenter">
 By purchasing an account here you agree to the terms of service which can be viewed below:
 </div>
 <div class = "col-md-7 semicenter with_scrolling">
-<%= render 'product_processors/vpn/terms' %> 
+<%= render 'product_processors/vpn/terms' %>
 </div>

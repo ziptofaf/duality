@@ -13,11 +13,8 @@
 		<%if controller.id==product.ProductProcessor_id %>
 			<% url="/store/#{product.id}" %>
 			<%= "<tr>".html_safe if tr_pattern(count) %>
-			<td><div style="width: 220px;"><%= link_to(image_tag(product.image.to_s, :title=>product.name.to_s, :alt=>product.name.to_s), url) %><br>
-			<%= "<div id=\"expand#{count}\">".html_safe %>
-			<%= "<a class=\"single\" target = \"#{count}\">".html_safe %>
-			<%= image_tag("expand.png", :id => "button#{count}".html_safe) %></a></div>
-			<%= "<div id=\"extended#{count}\" class = \"targetDiv\">".html_safe %>
+			<td><div style=<%="\"width: #{@width}px;\"".html_safe %> ><%= link_to(image_tag(product.image.to_s, :title=>product.name.to_s, :alt=>product.name.to_s), url) %><br>
+			<%= "<div id=\"extended#{count}\" class = \"targetDiv center\">".html_safe %>
 			<%= product.description.to_s.html_safe %><br></div></div></td>
 			<%= "</tr>".html_safe if tr_done_pattern(count) %>
 			<% count=count+1 %>
