@@ -16,7 +16,7 @@ class ProductsControllerTest < ActionController::TestCase
     assert_response :redirect
   end
 
-  test "should create product" do
+  test "shouldnt create product without admin privileges" do
     assert_no_difference('Product.count') do
       post :create, product: { ProductProcessor_id: @product.ProductProcessor_id, description: @product.description, name: @product.name, parameters: @product.parameters, price: @product.price }
     end
