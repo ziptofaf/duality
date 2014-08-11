@@ -15,7 +15,7 @@ test "buy a vpn" do
         visit "store/1"
         assert page.has_content?('test_if_details_show'), "details aren't showed!"
 	assert page.has_content?('Pro VPN'), "incorrect title!"
-	click_link "Buy!"
+	click_button "Buy now!"
 	assert page.has_content?('Choose contract length'), "didn't redirect to a correct website"
 	choose "2 weeks"
 	#select "russia", :from => 'Location'
