@@ -1,11 +1,11 @@
 
 <div class="center hero-unit">
-<div class="col-md-9 adjustToLeft">
+<div class="col-md-9 adjustToLeft semicenter">
 <h1> Sign up</h1>
 <% if @user.errors.any? %>
     <div class="alert alert-error">
       <h2><%= pluralize(@user.errors.count, "error") %> prohibited you from registering: </h2>
-   
+
 <% @user.errors.full_messages.each do |msg| %>
 <%= msg %><br />
 <% end %></ul></div>
@@ -30,4 +30,3 @@
       <%= f.submit "Sign up", :class => 'btn btn-default' %>
     <% end %></div>
 </div>
-
