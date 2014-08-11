@@ -1,5 +1,5 @@
 <div class = "col-md-6 semicenter">
-Summary of payment:
+<h2>Summary of payment</h2>
 <table class = "table table-bordered table-striped">
 	<thead>
 	<tr>
@@ -16,6 +16,6 @@ Summary of payment:
 </tr>
 </tbody>
 </table>
-<%= link_to "Click here to pay", @url %>
+<%= link_to image_tag("payment_doge.png", :title=>"Pay now with dogecoin", :alt=>"dogecoin"), @url %>
 <%= flash[:error] %>
 </div>

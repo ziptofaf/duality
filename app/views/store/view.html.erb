@@ -3,13 +3,14 @@
 <tr>
   <th>Product name:</th>
   <th>Price per month</th>
+  <th></th>
 </tr>
 </thead><tbody><tr>
 <td><%= @product.name %></td>
 <td><%= number_to_currency(@product.price) %></td>
-<td><%= link_to "Buy!", @url, :method=> :get %></td>
+<td><%= button_to "Buy now!", @url, :method=> :get, :class => 'btn btn-default' %></td>
 </tr></tbody>
 </table>
-<div class="center hero-unit">
+<div class="semicenter hero-unit">
 <%= @product.details %>
 </div>
