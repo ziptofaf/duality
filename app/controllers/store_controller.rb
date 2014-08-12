@@ -3,7 +3,11 @@ skip_before_action :authorize
   def index
    @products=Product.all
    @controllers = ProductProcessor.where("usable = ?", 1)
+   if @products.count!=0
    @width = 910/@products.count
+   else
+   @width = 910
+   end 
   end
 
   def view
