@@ -21,9 +21,9 @@ test:
 production:
   adapter: mysql
   encoding: utf8
-  database: test_production
-  username: rails_admin
-  password: 9ZHknqie8VfVPucEQCO9
+  database: duality
+  username: admin
+  password: jQNbB3ieaac2uofZ6VTN
   host: localhost
   port: 3306 
   pool: 10
