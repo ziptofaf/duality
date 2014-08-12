@@ -8,7 +8,7 @@ class ApplicationController < ActionController::Base
   protected
   def authorize
    unless logged_in?
-        redirect_to login_url, notice: "Please log in to access that resource"
+        redirect_to login_url, notice: "Please log in to access this site"
    end
   end
 
