@@ -15,8 +15,7 @@ class ApplicationController < ActionController::Base
  def admin_authorize
    user=User.find(session[:user_id])
    unless user.active==2
-      flash[:error]="Resource not found"
-      redirect_to root_path
+      redirect_to errors_routing_path
    end
  end
 
