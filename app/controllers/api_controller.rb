@@ -10,7 +10,7 @@ respond_to :json
    @test = Server.joins(:accounts).where('accounts.user_id=? and accounts.expire>? ', user.id, Time.now).select("accounts.login", "accounts.password", "accounts.id", :ip, :cert_url, :certname, :location)
      else
    return
-   end
+  end
   return
   end
 
@@ -35,7 +35,7 @@ respond_to :json
   rescue => e
     logger.fatal "#{e}"
     @response = {'status'=>'connection failure'}
-  end
+   end
 
   end
   def check_ip
@@ -48,29 +48,29 @@ respond_to :json
 
   def logs_params
    params.permit(:username, :kilobytes_sent, :kilobytes_received, :remote_ip, :api_key, :session_length, :server_id)
-   
+
   end
 
  def disconnect
   @response = {'status'=>'disconnection failure'} and return unless logs_params[:username] && logs_params[:kilobytes_sent] && logs_params[:kilobytes_received] && logs_params[:server_id] && logs_params[:api_key] && logs_params[:session_length]
   @response = {'status'=>'disconnection failure'} and return unless logs_params[:api_key]=='0mfd1INmx86TAzY3U25O'
   @response = {'status'=>'disconnection failure'} and logger.fatal "VPN with that username (#{logs_params[:username]}) SHOULDN'T EXIST. Security breach?" and return unless Account.exists?(:login => logs_params[:username])
-   begin
-  account = Account.find_by login: logs_params[:username]
-  account.active = account.active - 1
-  account.save!
-  server = Server.find(logs_params[:server_id])
-  server.capacity_current-=1
-  server.save!
-  log = AccountLog.new
-  log.account_id=account.id
-  log.kilobytes_sent=logs_params[:kilobytes_sent].to_i
-  log.kilobytes_received=logs_params[:kilobytes_received].to_i
-  log.remote = logs_params[:remote_ip]
-  log.end = Time.now
-  log.start = Time.now - logs_params[:session_length].to_i
-  log.save!
-  @response = {'status'=>'disconnection successful'}
+  begin
+   account = Account.find_by login: logs_params[:username]
+   account.active = account.active - 1
+   account.save!
+   server = Server.find(logs_params[:server_id])
+   server.capacity_current-=1
+   server.save!
+   log = AccountLog.new
+   log.account_id=account.id
+   log.kilobytes_sent=logs_params[:kilobytes_sent].to_i
+   log.kilobytes_received=logs_params[:kilobytes_received].to_i
+   log.remote = logs_params[:remote_ip]
+   log.end = Time.now
+   log.start = Time.now - logs_params[:session_length].to_i
+   log.save!
+   @response = {'status'=>'disconnection successful'}
   rescue => e
    logger.fatal "#{e}"
    @response = {'status'=>'disconnection failure'}

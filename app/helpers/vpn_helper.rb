@@ -25,7 +25,6 @@ module VpnHelper
  def extend_this_account(id, length)
   error_message and raise 'Invalid_id' unless Account.exists?(id: id)
   account = Account.find(id)
-  expire = account.expire
   new_date = (account.expire + length.to_i.months) if length>0.6
   new_date = (account.expire + 2.weeks) if length<0.6
   account.update_attribute :expire, new_date

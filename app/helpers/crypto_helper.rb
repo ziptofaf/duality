@@ -4,12 +4,12 @@ require 'rest_client'
 require 'open-uri' #this will need to be removed
 
 	def secret_api
-                return 'a953-a6--c264e29-0f50006b9f72e46bb14'
-        end
+    return 'a953-a6--c264e29-0f50006b9f72e46bb14'
+	end
 
-        def public_api
-                return 'b1a4ef4-16-d00b--156fee58bbc74af30cc'
-        end
+  def public_api
+    return 'b1a4ef4-16-d00b--156fee58bbc74af30cc'
+  end
 
 	def create_a_payment_url(amount, processor, ipn)
 		begin
@@ -23,7 +23,7 @@ require 'open-uri' #this will need to be removed
 			raise 'Something went wrong with accessing moolah'
 		end
 	end
-	
+
 	def insert_into_db(json_hash, amount, user_id, processor_id)
 		raise 'json hash is empty!' if json_hash==false
 		payment = Payment.new
@@ -40,10 +40,10 @@ require 'open-uri' #this will need to be removed
 		payment = Payment.find_by(tx: _tx)
 		logger.error "tx : #{_tx} was found invalid" and raise 'invalid tx' unless payment
 		if _status=="complete" && payment.status=="pending"
-                        logger.error "failed double authorization!" and raise 'double authorization failed' unless double_authorization(_tx)==true
+      logger.error "failed double authorization!" and raise 'double authorization failed' unless double_authorization(_tx)==true
 			user = User.find(payment.user_id)
 			wallet=user.balance
-			wallet+=((payment.amount)*1.05).round(2)
+			wallet+=((payment.amount)*1.1).round(2)
 			user.update_attribute(:balance, wallet)
 			payment.status="complete"
 			logger.error "Problem with saving record into payment database" and raise "Cant save record to the database" unless payment.save==true
@@ -53,9 +53,9 @@ require 'open-uri' #this will need to be removed
 			logger.error "Problem with saving record into payment database" and raise "Cant save record to the database" unless payment.save==true
 			return true
 		end
-		
+
 	end
-	
+
 	def double_authorization(_tx)
 		link="https://api.moolah.io/v2/private/merchant/status"
 		arguments = {"apiKey"=>public_api, "guid"=>_tx}
@@ -64,5 +64,5 @@ require 'open-uri' #this will need to be removed
 		#return response
 		return true if response["status"]=="success" #and response["transaction"]["tx"]["status"]=="complete"
 		return false
-		end
+	end
 end

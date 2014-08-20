@@ -24,6 +24,7 @@
 <br />
 <%= f.label :method, 'Payment method' %>
 <%= f.select :payment_method, @array, :prompt => 'Select One' %>
+</br />Note: all cryptocurrency based transactions come with 10% bonus (eg. pay $3, get $3.30)
 <br />
 <br /><%=f.submit "Proceed to checkout", :class => 'btn btn-default' %>
 <% end %>

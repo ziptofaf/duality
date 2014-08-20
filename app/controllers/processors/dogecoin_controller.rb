@@ -25,9 +25,9 @@ def listen
     error_message and redirect_to root_path and return unless listen_params[:apiSecret]==secret_api
     update_payment(listen_params[:status], listen_params[:guid])
     redirect_to root_path and return
- rescue => e
+   rescue => e
 redirect_to root_path and return
- end
+  end
 end
 
 protected
@@ -35,4 +35,3 @@ def listen_params
  params.permit(:tx, :guid, :timestamp, :status, :apiSecret, :ipn_extra)
 end
 end
-
