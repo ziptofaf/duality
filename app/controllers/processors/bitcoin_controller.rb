@@ -24,8 +24,8 @@ def listen
     redirect_to root_path and return unless listen_params[:apiSecret]==secret_api
     update_payment(listen_params[:status], listen_params[:guid])
     redirect_to root_path and return
- rescue => e
- end
+   rescue => e
+   end
 end
 
 protected
@@ -34,6 +34,3 @@ def listen_params
 end
 
 end
-
-
-

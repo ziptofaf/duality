@@ -27,7 +27,7 @@ def create
         rescue => e
                 redirect_to store_path and flash[:error]= "#{e}" and return
         end
-                flash[:notice]="Your account has been created!"
+                flash[:notice]="Your account has been created! Please visit 'How to connect' in the menu above in order to use your freshly acquired account!"
 		redirect_to store_path
 
 end
