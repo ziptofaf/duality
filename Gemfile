@@ -52,3 +52,7 @@ gem 'mysql', group: [:production]
 gem 'chartkick'
 
 gem 'capybara', group: [:development, :test]
+
+#used to write a daemon that can monitor vpns server status
+gem 'daemons-rails'
+gem 'net-ping'

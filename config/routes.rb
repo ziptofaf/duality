@@ -1,4 +1,6 @@
 Duality::Application.routes.draw do
+  get 'status/server'
+
   #this thing needs to be cleaned up :O
   get 'connection/main'
   get 'connection/walkthrough_pc'

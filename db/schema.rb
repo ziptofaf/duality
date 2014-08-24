@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140812135301) do
+ActiveRecord::Schema.define(version: 20140824153945) do
 
   create_table "account_logs", force: true do |t|
     t.integer  "account_id"
@@ -119,6 +119,7 @@ ActiveRecord::Schema.define(version: 20140812135301) do
     t.datetime "updated_at"
     t.string   "certname"
     t.integer  "server_pool_id"
+    t.string   "status"
   end
 
   add_index "servers", ["server_pool_id"], name: "index_servers_on_server_pool_id"

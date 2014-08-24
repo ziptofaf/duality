@@ -46,6 +46,10 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.7.1)
+    daemons (1.1.9)
+    daemons-rails (1.2.1)
+      daemons
+      multi_json (~> 1.0)
     erubis (2.7.0)
     execjs (2.2.1)
     hike (1.2.3)
@@ -68,6 +72,7 @@ GEM
     minitest (5.4.0)
     multi_json (1.10.1)
     mysql (2.9.1)
+    net-ping (1.7.4)
     netrc (0.7.7)
     nokogiri (1.6.3.1)
       mini_portile (= 0.6.0)
@@ -140,11 +145,13 @@ DEPENDENCIES
   capybara
   chartkick
   coffee-rails
+  daemons-rails
   jbuilder
   jquery-rails
   jquery-turbolinks
   json
   mysql
+  net-ping
   rails (= 4.1.4)
   rest-client
   sass-rails (~> 4.0.3)
