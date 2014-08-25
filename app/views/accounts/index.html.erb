@@ -1,5 +1,5 @@
 <h1>Listing accounts</h1>
-
+<h2><%= @accounts.count %></h2>
 <table class="table table-bordered">
   <thead>
     <tr>
@@ -8,7 +8,7 @@
       <th>Expire</th>
       <th>Active</th>
       <th>User</th>
-      <th>Serve Poolr</th>
+      <th>Server Pool</th>
       <th>Product</th>
       <th></th>
       <th></th>
@@ -22,9 +22,10 @@
         <td><%= account.password %></td>
         <td><%= account.expire %></td>
         <td><%= account.active %></td>
-        <td><%= account.user %></td>
-        <td><%= account.server_pool %></td>
-        <td><%= account.product %></td>
+        <td><%= account.user.id %></td>
+        <td><%= account.server_pool.id %></td>
+        <%= account.product if account.product.nil? %>
+        <td><%= account.product.id unless account.product.nil? %></td>
         <td><%= link_to 'Show', account %></td>
         <td><%= link_to 'Edit', edit_account_path(account) %></td>
         <td><%= button_to 'Destroy', account, method: :delete, data: { confirm: 'Are you sure?' } %></td>

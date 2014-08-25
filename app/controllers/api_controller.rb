@@ -39,7 +39,7 @@ respond_to :json
 
   end
   def check_ip
-   @response = {'ip'=> request.remote_ip, 'message' => "If you downloaded a client before 19th August, please redownload", 'link'=>"#"}
+   @response = {'ip'=> request.remote_ip, 'message' => "If you downloaded a client before 24th August, please redownload", 'link'=>"#"}
   end
 
   def api_params

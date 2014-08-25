@@ -33,24 +33,24 @@ require 'open-uri' #this will need to be removed
 		payment.user_id=user_id
 		payment.amount=amount
 		payment.status="pending"
-		logger.error "cannot save record!" and raise 'cant save the record into db' unless payment.save==true
+		logger.error "cannot save record!" and raise 'cant save the record into db' unless payment.save
 	end
 
 	def update_payment(_status, _tx)
 		payment = Payment.find_by(tx: _tx)
 		logger.error "tx : #{_tx} was found invalid" and raise 'invalid tx' unless payment
 		if _status=="complete" && payment.status=="pending"
-      logger.error "failed double authorization!" and raise 'double authorization failed' unless double_authorization(_tx)==true
+      logger.error "failed double authorization!" and raise 'double authorization failed' unless double_authorization(_tx)
 			user = User.find(payment.user_id)
 			wallet=user.balance
 			wallet+=((payment.amount)*1.1).round(2)
 			user.update_attribute(:balance, wallet)
 			payment.status="complete"
-			logger.error "Problem with saving record into payment database" and raise "Cant save record to the database" unless payment.save==true
+			logger.error "Problem with saving record into payment database" and raise "Cant save record to the database" unless payment.save
 			return true
 		else
 			payment.status=_status if payment.status!="complete"
-			logger.error "Problem with saving record into payment database" and raise "Cant save record to the database" unless payment.save==true
+			logger.error "Problem with saving record into payment database" and raise "Cant save record to the database" unless payment.save
 			return true
 		end
 
