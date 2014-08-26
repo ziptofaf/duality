@@ -18,7 +18,7 @@ respond_to :json
   @response = {'status'=>'failure'} and return unless api_params[:login] && api_params[:password] && api_params[:api_key]=='0mfd1INmx86TAzY3U25O' && api_params[:server_id]
   account = Account.find_by login: api_params[:login]
   server = Server.find(api_params[:server_id])
-  @response = {'status'=>'failure'} and return unless account && server && account.server_pool_id>=server.server_pool_id && account.expire>Time.now && account.password==api_params[:password] && account.active<=1
+  @response = {'status'=>'failure'} and return unless account && server && account.server_pool_id>=server.server_pool_id && account.expire>Time.now && account.password==api_params[:password] && account.active<=3
   @response = {'status'=>'success'}
   end
 
