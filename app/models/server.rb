@@ -6,6 +6,7 @@ validates :ip, format: {with: VALID_IP}
 has_many :accounts, through: :server_pool
 has_many :users, through: :accounts
 before_create :autofill
+before_save :capacityGuardian
 
 def autofill
 	if self.certname.empty?
@@ -16,5 +17,8 @@ def autofill
 	end
 end
 
+def capacityGuardian
+	self.capacity_current = 0 if self.capacity_current < 0
+end
 
 end

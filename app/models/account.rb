@@ -2,7 +2,7 @@ class Account < ActiveRecord::Base
   belongs_to :user
   belongs_to :product
   belongs_to :server_pool
-  
+
   validates :server_pool, presence: true
   has_many :account_logs
   validates :user, presence: true
@@ -10,5 +10,11 @@ class Account < ActiveRecord::Base
   validates :login, presence: true
   validates :password, presence: true
   validates :expire, presence: true
+  validates :active, presence: true
+after_validation :statusGuard
+
+def statusGuard
+self.active = 0 if self.active < 0
+end
 
 end
