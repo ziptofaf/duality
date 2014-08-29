@@ -16,7 +16,14 @@ end
 def findParentAccount(a_login)
   return nil unless SpecialAccount.exists?(:login => a_login)
   subaccount = SpecialAccount.find_by login: a_login
-    account = subaccount.account
+  account = subaccount.account
   return account
 end
+
+def authorizeSubaccount(a_login, a_password)
+return false unless SpecialAccount.exists?(:login => a_login)
+subaccount = SpecialAccount.find_by login: a_login
+return a_password==subaccount.password
+end
+
 end

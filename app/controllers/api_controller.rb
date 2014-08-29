@@ -18,14 +18,22 @@ respond_to :json
   def server_side #REFACTOR FUCKING VARIABLE NAME TO ACCOUNT INSTEAD OF USER
   @response = {'status'=>'failure'} and return unless api_params[:login] && api_params[:password] && api_params[:api_key]=='0mfd1INmx86TAzY3U25O' && api_params[:server_id]
   if api_params[:login][0]=='@'
-    account = findParentAccount(api_params[:login])
+    login = api_params[:login]
+    password = api_params[:password]
+    server = Server.find(api_params[:server_id])
+    account = findParentAccount(login)
     @response = {'status'=>'failure'} and return if account.nil?
+    @response = {'status'=>'failure'} and return unless server && account.server_pool_id>=server.server_pool_id && account.expire>Time.now &&
+                                                        authorizeSubaccount(login, password) && account.active<=3
+    @response = {'status'=>'success'}
   else
+    server = Server.find(api_params[:server_id])
     account = Account.find_by login: api_params[:login]
+    @response = {'status'=>'failure'} and return unless account && server && account.server_pool_id>=server.server_pool_id && account.expire>Time.now &&
+                                                        account.password==api_params[:password] && account.active<=3
+    @response = {'status'=>'success'}
   end
-  server = Server.find(api_params[:server_id])
-  @response = {'status'=>'failure'} and return unless account && server && account.server_pool_id>=server.server_pool_id && account.expire>Time.now && account.password==api_params[:password] && account.active<=3
-  @response = {'status'=>'success'}
+
   end
 
   def connect
@@ -50,7 +58,7 @@ respond_to :json
 
   end
   def check_ip
-   @response = {'ip'=> request.remote_ip, 'message' => "If you downloaded a client before 24th August, please redownload", 'link'=>"#"}
+   @response = {'ip'=> request.remote_ip, 'message' => "", 'link'=>"#"}
   end
 
   def api_params
