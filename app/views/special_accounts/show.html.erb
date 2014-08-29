@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Login:</strong>
+  <%= @special_account.login %>
+</p>
+
+<p>
+  <strong>Password:</strong>
+  <%= @special_account.password %>
+</p>
+
+<p>
+  <strong>Account:</strong>
+  <%= @special_account.account %>
+</p>
+
+<p>
+  <strong>Account:</strong>
+  <%= @special_account.device %>
+</p>
+
+<%= link_to 'Edit', edit_special_account_path(@special_account) %> |
+<%= link_to 'Back', special_accounts_path %>

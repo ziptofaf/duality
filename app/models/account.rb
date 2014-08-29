@@ -5,9 +5,10 @@ class Account < ActiveRecord::Base
 
   validates :server_pool, presence: true
   has_many :account_logs
+  has_many :special_accounts
   validates :user, presence: true
   validates :product, presence: true
-  validates :login, presence: true
+  validates :login, presence: true, uniqueness: { case_sensitive: true }
   validates :password, presence: true
   validates :expire, presence: true
   validates :active, presence: true

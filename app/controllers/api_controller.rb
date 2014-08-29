@@ -1,4 +1,5 @@
 class ApiController < ApplicationController
+include SpecialAccountHelper
 skip_before_action :authorize
 skip_before_action :verify_authenticity_token
 respond_to :json
@@ -16,7 +17,12 @@ respond_to :json
 
   def server_side #REFACTOR FUCKING VARIABLE NAME TO ACCOUNT INSTEAD OF USER
   @response = {'status'=>'failure'} and return unless api_params[:login] && api_params[:password] && api_params[:api_key]=='0mfd1INmx86TAzY3U25O' && api_params[:server_id]
-  account = Account.find_by login: api_params[:login]
+  if api_params[:login][0]=='@'
+    account = findParentAccount(api_params[:login])
+    @response = {'status'=>'failure'} and return unless account
+  else
+    account = Account.find_by login: api_params[:login]
+  end
   server = Server.find(api_params[:server_id])
   @response = {'status'=>'failure'} and return unless account && server && account.server_pool_id>=server.server_pool_id && account.expire>Time.now && account.password==api_params[:password] && account.active<=3
   @response = {'status'=>'success'}
@@ -24,7 +30,12 @@ respond_to :json
 
   def connect
     @response = {'status'=>'connection failure'} and return unless api_params[:login] && api_params[:api_key]=='0mfd1INmx86TAzY3U25O' && api_params[:server_id]
-    account = Account.find_by login: api_params[:login]
+    if api_params[:login][0]=='@'
+        account = findParentAccount(api_params[:login])
+        @response = {'status'=>'failure'} and return unless account
+    else
+      account = Account.find_by login: api_params[:login]
+    end
     server = Server.find(api_params[:server_id])
    begin
     account.active+=1
@@ -54,9 +65,14 @@ respond_to :json
  def disconnect
   @response = {'status'=>'disconnection failure'} and return unless logs_params[:username] && logs_params[:kilobytes_sent] && logs_params[:kilobytes_received] && logs_params[:server_id] && logs_params[:api_key] && logs_params[:session_length]
   @response = {'status'=>'disconnection failure'} and return unless logs_params[:api_key]=='0mfd1INmx86TAzY3U25O'
-  @response = {'status'=>'disconnection failure'} and logger.fatal "VPN with that username (#{logs_params[:username]}) SHOULDN'T EXIST. Security breach?" and return unless Account.exists?(:login => logs_params[:username])
+  @response = {'status'=>'disconnection failure'} and logger.fatal "VPN with that username (#{logs_params[:username]}) SHOULDN'T EXIST. Security breach?" and return unless Account.exists?(:login => logs_params[:username]) or SpecialAccount.exists?(:login => logs_params[:username])
   begin
-   account = Account.find_by login: logs_params[:username]
+    if logs_params[:username][0]=='@'
+      account = findParentAccount(logs_params[:username])
+      @response = {'status'=>'disconnection failure'} and return unless account
+    else
+      account = Account.find_by login: logs_params[:username]
+    end
    account.active = account.active - 1
    account.save!
    server = Server.find(logs_params[:server_id])

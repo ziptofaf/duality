@@ -1,4 +1,6 @@
 Duality::Application.routes.draw do
+  resources :special_accounts
+
   get 'status/server'
 
   #this thing needs to be cleaned up :O

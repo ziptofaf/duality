@@ -1,0 +1,31 @@
+<h1>Listing special_accounts</h1>
+
+<table class = "table table-bordered">
+  <thead>
+    <tr>
+      <th>Login</th>
+      <th>Password</th>
+      <th>Account</th>
+      <th>Device</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @special_accounts.each do |special_account| %>
+      <tr>
+        <td><%= special_account.login %></td>
+        <td><%= special_account.password %></td>
+        <td><%= special_account.account.id %></td>
+        <td><%= special_account.device %></td>
+        <td><%= link_to 'Show', special_account %></td>
+        <td><%= link_to 'Edit', edit_special_account_path(special_account) %></td>
+        <td><%= link_to 'Destroy', special_account, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Special account', new_special_account_path %>
