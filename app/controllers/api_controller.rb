@@ -19,7 +19,7 @@ respond_to :json
   @response = {'status'=>'failure'} and return unless api_params[:login] && api_params[:password] && api_params[:api_key]=='0mfd1INmx86TAzY3U25O' && api_params[:server_id]
   if api_params[:login][0]=='@'
     account = findParentAccount(api_params[:login])
-    @response = {'status'=>'failure'} and return unless account
+    @response = {'status'=>'failure'} and return if account.nil?
   else
     account = Account.find_by login: api_params[:login]
   end
