@@ -69,6 +69,6 @@ class SpecialAccountsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def special_account_params
-      params.require(:special_account).permit(:login, :password, :account_id, :device)
+      params.require(:special_account).permit(:login, :password, :account_id, :device, :user_id)
     end
 end

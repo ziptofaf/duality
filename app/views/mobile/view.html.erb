@@ -1,0 +1,14 @@
+<%= render 'menu' %>
+<div class = "container-right">
+<p> Your mobile account </p>
+<% if @eligibleToHave and !@mobileExists %>
+<%= button_to "Click here to create your mobile VPN account!", action: :add, :class => 'btn btn-default' %>
+
+<% end %>
+<% if @mobileExists %>
+<%= link_to "Click here to access your mobile VPN account details!", mobile_check_path %>
+<% end %>
+<% if !@eligibleToHave %>
+You need to have a VPN account (available in the store) to create mobile device one connected to it.
+<% end %>
+</div>

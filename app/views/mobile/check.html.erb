@@ -1,0 +1,14 @@
+<h1>Details of your mobile VPN</h1>
+Login:
+<%= @account.login %><br /><br />
+Password:
+<%= @account.password %><br /><br />
+
+<%= form_for :zip, :url=>product_processors_vpn_sendZip_path do |f| %>
+<%= f.label :server, "Choose server you wish to connect to from the list" %>
+<br />
+<%= f.select :server, @servers, :prompt => "Select one" %>
+<br /><br />
+<%= f.hidden_field :server_pool, :value => @account.account.server_pool_id.to_i  %>
+<%= f.submit "Download zip archive with files necessary to connect to vpn", :class => 'btn btn-default' %>
+<% end %>

@@ -3,13 +3,13 @@ module SpecialAccountHelper
 
 def uniqueLogin
     login = "@"
-    random_string = SecureRandom.base64(8)
+    random_string = SecureRandom.base64(7)
     random_string = random_string.gsub(/[+,=\/]/, "")
     login+=random_string
 end
 
 def uniquePassword
-  random_string = SecureRandom.base64(8)
+  random_string = SecureRandom.base64(7)
   random_string = random_string.gsub(/[+,=\/]/, "")
 end
 

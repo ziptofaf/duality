@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140829101522) do
+ActiveRecord::Schema.define(version: 20140830085717) do
 
   create_table "account_logs", force: true do |t|
     t.integer  "account_id"
@@ -131,9 +131,11 @@ ActiveRecord::Schema.define(version: 20140829101522) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "device"
+    t.integer  "user_id"
   end
 
   add_index "special_accounts", ["account_id"], name: "index_special_accounts_on_account_id"
+  add_index "special_accounts", ["user_id"], name: "index_special_accounts_on_user_id"
 
   create_table "users", force: true do |t|
     t.string   "email"
