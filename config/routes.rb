@@ -28,6 +28,8 @@ Duality::Application.routes.draw do
   get 'connection/walkthrough_pc'
   get 'connection/walkthrough_mac'
   get 'connection/walkthrough_linux'
+  get 'connection/walkthrough_ios'
+  get 'connection/walkthrough_android'
   get 'connection/client'
   #footer
   get 'footer/what_is_vpn'

@@ -24,7 +24,7 @@ ActiveRecord::Schema.define(version: 20140830085717) do
     t.string   "remote"
   end
 
-  add_index "account_logs", ["account_id"], name: "index_account_logs_on_account_id"
+  add_index "account_logs", ["account_id"], name: "index_account_logs_on_account_id", using: :btree
 
   create_table "accounts", force: true do |t|
     t.string   "login"
@@ -38,9 +38,9 @@ ActiveRecord::Schema.define(version: 20140830085717) do
     t.integer  "server_pool_id"
   end
 
-  add_index "accounts", ["product_id"], name: "index_accounts_on_product_id"
-  add_index "accounts", ["server_pool_id"], name: "index_accounts_on_server_pool_id"
-  add_index "accounts", ["user_id"], name: "index_accounts_on_user_id"
+  add_index "accounts", ["product_id"], name: "index_accounts_on_product_id", using: :btree
+  add_index "accounts", ["server_pool_id"], name: "index_accounts_on_server_pool_id", using: :btree
+  add_index "accounts", ["user_id"], name: "index_accounts_on_user_id", using: :btree
 
   create_table "payments", force: true do |t|
     t.integer  "processor_id"
@@ -52,8 +52,8 @@ ActiveRecord::Schema.define(version: 20140830085717) do
     t.datetime "updated_at"
   end
 
-  add_index "payments", ["processor_id"], name: "index_payments_on_processor_id"
-  add_index "payments", ["user_id"], name: "index_payments_on_user_id"
+  add_index "payments", ["processor_id"], name: "index_payments_on_processor_id", using: :btree
+  add_index "payments", ["user_id"], name: "index_payments_on_user_id", using: :btree
 
   create_table "processors", force: true do |t|
     t.string   "name"
@@ -73,15 +73,15 @@ ActiveRecord::Schema.define(version: 20140830085717) do
     t.string   "name"
     t.text     "description"
     t.integer  "ProductProcessor_id"
-    t.decimal  "price",                           precision: 8, scale: 2
+    t.decimal  "price",               precision: 8, scale: 2
     t.string   "parameters"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "image"
-    t.text     "details",             limit: 255
+    t.text     "details"
   end
 
-  add_index "products", ["ProductProcessor_id"], name: "index_products_on_ProductProcessor_id"
+  add_index "products", ["ProductProcessor_id"], name: "index_products_on_ProductProcessor_id", using: :btree
 
   create_table "purchases", force: true do |t|
     t.string   "name"
@@ -92,7 +92,7 @@ ActiveRecord::Schema.define(version: 20140830085717) do
     t.integer  "user_id"
   end
 
-  add_index "purchases", ["user_id"], name: "index_purchases_on_user_id"
+  add_index "purchases", ["user_id"], name: "index_purchases_on_user_id", using: :btree
 
   create_table "recoveries", force: true do |t|
     t.integer  "user_id"
@@ -102,7 +102,7 @@ ActiveRecord::Schema.define(version: 20140830085717) do
     t.datetime "updated_at"
   end
 
-  add_index "recoveries", ["user_id"], name: "index_recoveries_on_user_id"
+  add_index "recoveries", ["user_id"], name: "index_recoveries_on_user_id", using: :btree
 
   create_table "server_pools", force: true do |t|
     t.string   "name"
@@ -122,7 +122,7 @@ ActiveRecord::Schema.define(version: 20140830085717) do
     t.string   "status"
   end
 
-  add_index "servers", ["server_pool_id"], name: "index_servers_on_server_pool_id"
+  add_index "servers", ["server_pool_id"], name: "index_servers_on_server_pool_id", using: :btree
 
   create_table "special_accounts", force: true do |t|
     t.string   "login"
@@ -134,8 +134,8 @@ ActiveRecord::Schema.define(version: 20140830085717) do
     t.integer  "user_id"
   end
 
-  add_index "special_accounts", ["account_id"], name: "index_special_accounts_on_account_id"
-  add_index "special_accounts", ["user_id"], name: "index_special_accounts_on_user_id"
+  add_index "special_accounts", ["account_id"], name: "index_special_accounts_on_account_id", using: :btree
+  add_index "special_accounts", ["user_id"], name: "index_special_accounts_on_user_id", using: :btree
 
   create_table "users", force: true do |t|
     t.string   "email"
