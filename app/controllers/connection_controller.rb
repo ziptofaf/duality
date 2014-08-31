@@ -12,4 +12,10 @@ class ConnectionController < ApplicationController
 
   def walkthrough_linux
   end
+
+  def walkthrough_android
+  end
+  
+  def walkthrough_ios
+  end
 end
