@@ -4,10 +4,10 @@ skip_before_action :authorize
    @products=Product.all
    @controllers = ProductProcessor.where("usable = ?", 1)
    if @products.count!=0
-   @width = 910/@products.count
+   @width = 950/@products.count
    else
-   @width = 910
-   end 
+   @width = 950
+   end
   end
 
   def view
