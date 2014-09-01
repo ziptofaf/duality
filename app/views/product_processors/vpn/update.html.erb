@@ -6,21 +6,17 @@
 <% if flash[:error] %>
 <div class="alert alert-error"><%= flash[:error] %></div>
 <% end %>
-Price per month: 
-<%= @product.price %>
 <%= form_for :extend, url: {action: "extend_account"} do |f| %>
 <%= 'For how long would you like to extend this VPN?' %>
 <br /><%= f.radio_button :time, '0.5' %>
-<%= f.label :time, '2 weeks', :value => '0.5' %>
+<%= f.label :time, '2 weeks', :value => '0.5' %> - <%= number_to_currency (@product.price*0.5) %>
 <br /><%= f.radio_button :time, '1' %>
-<%= f.label :time, '1 month', :value => '1' %>
+<%= f.label :time, '1 month', :value => '1' %> - <%= number_to_currency (@product.price) %>
 <br /><%= f.radio_button :time, '2' %>
-<%= f.label :time, '2 months', :value => '2' %>
+<%= f.label :time, '2 months', :value => '2' %> - <%= number_to_currency (@product.price*2) %>
 <br /><%= f.radio_button :time, '3' %>
-<%= f.label :time, '3 months', :value => '3' %>
+<%= f.label :time, '3 months', :value => '3' %> - <%= number_to_currency (@product.price*3) %>
 <%= f.hidden_field :id, :value => @account%>
 <br /><%= f.submit "Extend this VPN account", :class => 'btn btn-default' %>
 <% end %>
 </div>
-
-
