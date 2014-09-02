@@ -1,5 +1,6 @@
 class ApiController < ApplicationController
 include SpecialAccountHelper
+include DcLogHelper
 skip_before_action :authorize
 skip_before_action :verify_authenticity_token
 respond_to :json
@@ -24,7 +25,8 @@ respond_to :json
     account = findParentAccount(login)
     @response = {'status'=>'failure'} and return if account.nil?
     @response = {'status'=>'failure'} and return unless server && account.server_pool_id>=server.server_pool_id && account.expire>Time.now &&
-                                                        authorizeSubaccount(login, password) && account.active<=3
+                                                        authorizeSubaccount(login, password) && account.active<=4
+    invokeScript(account.login, server.id.to_s) and cleanUp(account, server) if account.active>=3 ###THIS IS AN UGLY HACK AND A POSSIBLE SECURITY LEAK.
     @response = {'status'=>'success'}
   else
     server = Server.find(api_params[:server_id])
