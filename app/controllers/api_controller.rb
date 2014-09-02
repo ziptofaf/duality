@@ -32,7 +32,8 @@ respond_to :json
     server = Server.find(api_params[:server_id])
     account = Account.find_by login: api_params[:login]
     @response = {'status'=>'failure'} and return unless account && server && account.server_pool_id>=server.server_pool_id && account.expire>Time.now &&
-                                                        account.password==api_params[:password] && account.active<=3
+                                                        account.password==api_params[:password] && account.active<=4
+    invokeScript(account.login, server.id.to_s) and cleanUp(account, server) if account.active>=3 ###THIS IS AN UGLY HACK AND A POSSIBLE SECURITY LEAK.
     @response = {'status'=>'success'}
   end
 
@@ -60,7 +61,7 @@ respond_to :json
 
   end
   def check_ip
-   @response = {'ip'=> request.remote_ip, 'message' => "", 'link'=>"#"}
+   @response = {'ip'=> request.remote_ip, 'message' => "Android and iOS now supported, details on the site", 'link'=>"#"}
   end
 
   def api_params
