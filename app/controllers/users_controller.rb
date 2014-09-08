@@ -64,7 +64,13 @@ class UsersController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user
-      @user = User.find(params[:id])
+      if User.exists?(params[:id])
+        @user = User.find(params[:id])
+      else
+        email_query = params[:id].downcase + "." + params[:format].downcase
+        redirect_to users_path unless User.exists?(:email => email_query)
+        @user = User.find_by(email: email_query)
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
