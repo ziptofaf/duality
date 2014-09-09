@@ -2,7 +2,7 @@ require 'securerandom'
 module VpnHelper
 
   def pay(amount)
-   error_message and raise 'THIS MUST BE POSITIVE' unless amount>0
+   error_message and raise 'THIS MUST BE POSITIVE' unless amount>=0
    flash[:error]="Insufficient funds" and raise 'Insufficient funds' if balance-amount<0
    user = User.find(session[:user_id])
    funds = user.balance - amount
@@ -10,7 +10,7 @@ module VpnHelper
   end
 
  def check_if_correct(time)
-  error_message and raise 'Invalid contract time' unless time==3 or time==2 or time==1 or time==0.5
+  error_message and raise 'Invalid contract time' unless time==3 or time==2 or time==1 or time==0.5 or time==0.1
  end
 
  def can_extend?(id) #this returns product that was used to buy an account
@@ -25,8 +25,9 @@ module VpnHelper
  def extend_this_account(id, length)
   error_message and raise 'Invalid_id' unless Account.exists?(id: id)
   account = Account.find(id)
-  new_date = (account.expire + length.to_i.months) if length>0.6
-  new_date = (account.expire + 2.weeks) if length<0.6
+  new_date = (account.expire + length.to_i.months) if length>0.5
+  new_date = (account.expire + 2.weeks) if length==0.5
+  error_message and raise 'Cant extend for less than 2 weeks' if length<0.5
   account.update_attribute :expire, new_date
  end
 
@@ -38,15 +39,19 @@ module VpnHelper
   account.user_id = session[:user_id]
   account.product_id = product_id
   account.active = 0
-  if expire_value==0.5
-    account.expire = 2.weeks.from_now
+  if expire_value==0.5 or expire_value==0.1
+    account.expire = 2.weeks.from_now if expire_value == 0.5
+    account.expire = 3.days.from_now if expire_value == 0.1
+    flash[:error] = "You can only get a free account if you never had one before" and
+    raise 'trying to make a second free account' and return if Account.exists?(:user_id => session[:user_id])
   else
-    account.expire = expire_value.to_i.months.from_now
+     account.expire = expire_value.to_i.months.from_now
   end
   error_message and raise 'couldnt save the record' unless account.save
  end
 
  def log_payment(product_id, value, extending=false)
+  return if value<=0
   purchase = Purchase.new
   purchase.date = Time.now
   purchase.user_id=session[:user_id]

@@ -21,11 +21,12 @@ def create
                 server_pool = ServerPool.find(pool_level)
                 check_if_correct(buy_params[:time].to_f)
                 price = @product.price * buy_params[:time].to_f
+								price = 0 if buy_params[:time].to_f==0.1
                 pay(price)
-		log_payment(@product.id, price)
-		create_account(server_pool, @product.id, buy_params[:time].to_f)
+								log_payment(@product.id, price)
+								create_account(server_pool, @product.id, buy_params[:time].to_f)
         rescue => e
-                redirect_to store_path and flash[:error]= "#{e}" and return
+                redirect_to store_path and return
         end
                 flash[:notice]="Your account has been created! Please visit 'How to connect' in the menu above in order to use your freshly acquired account!"
 		redirect_to store_path

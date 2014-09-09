@@ -8,6 +8,8 @@
 <% end %>
 <%= form_for :vpn, url: {action: "create"} do |f| %>
 <%= 'For how long would you like this VPN?' %>
+<br /><%= f.radio_button :time, '0.1' %>
+<%= f.label :time, '3 days', :value => '0.1' %> - Free!
 <br /><%= f.radio_button :time, '0.5' %>
 <%= f.label :time, '2 weeks', :value => '0.5' %> - <%= number_to_currency (@product.price*0.5) %>
 <br /><%= f.radio_button :time, '1' %>
