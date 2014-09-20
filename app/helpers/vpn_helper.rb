@@ -43,7 +43,7 @@ module VpnHelper
     account.expire = 2.weeks.from_now if expire_value == 0.5
     account.expire = 3.days.from_now if expire_value == 0.1
     flash[:error] = "You can only get a free account if you never had one before" and
-    raise 'trying to make a second free account' and return if Account.exists?(:user_id => session[:user_id])
+    raise 'trying to make a second free account' and return if Account.exists?(:user_id => session[:user_id]) and expire_value == 0.1
   else
      account.expire = expire_value.to_i.months.from_now
   end
