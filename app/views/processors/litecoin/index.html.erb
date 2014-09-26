@@ -1,0 +1,21 @@
+<div class = "col-md-6 semicenter">
+<h2>Summary of payment</h2>
+<table class = "table table-bordered table-striped">
+  <thead>
+  <tr>
+    <th>Description</th>
+    <th>Payment method</th>
+    <th>Price</th>
+  </tr>
+  </thead>
+  <tbody>
+<tr>
+<td>Add DualityNetwork Funds</td>
+<td>Litecoin</td>
+<td><%= number_to_currency(@amount) %></td>
+</tr>
+</tbody>
+</table>
+<%= link_to image_tag("payment_ltc.png", :title=>"Pay now with litecoin", :alt=>"litecoin"), @url %>
+<%= flash[:error] %>
+</div>

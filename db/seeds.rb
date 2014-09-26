@@ -6,7 +6,7 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-processors = Processor.create([{ name: 'dogecoin', usable: 1}, { name: 'bitcoin', usable: 1},
+processors = Processor.create([{ name: 'dogecoin', usable: 1}, { name: 'bitcoin', usable: 1}, { name: 'litecoin', usable: 1},
 { name: 'paypal', usable: 1}])
 
 product_processors = ProductProcessor.create([{name: 'vpn', usable: 1},{name: 'placeholder', usable: 0}])

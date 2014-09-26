@@ -8,11 +8,13 @@ Duality::Application.routes.draw do
   #paymeny processors
   namespace :processors do
    match '/listen/dogecoin', to: 'dogecoin#listen', via: 'post'
+   match '/listen/litecoin', to: 'litecoin#listen', via: 'post'
    match '/listen/bitcoin', to: 'bitcoin#listen', via: 'post'
    match '/listen/paypal', to: 'paypal#listen', via: 'post'
    resources :dogecoin, only: [:index]
    resources :bitcoin, only: [:index]
    resources :paypal, only: [:index]
+   resources :litecoin, only: [:index]
   end
   #product_processors such as vpn
   namespace :product_processors do
