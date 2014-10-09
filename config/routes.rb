@@ -1,10 +1,12 @@
 Duality::Application.routes.draw do
+
   #resources - admin only available
   resources :special_accounts
   resources :products
   resources :accounts
   resources :servers
   resources :users
+  get 'payments/show'
   #paymeny processors
   namespace :processors do
    match '/listen/dogecoin', to: 'dogecoin#listen', via: 'post'

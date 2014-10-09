@@ -16,7 +16,7 @@ respond_to :json
   return
   end
 
-  def server_side #REFACTOR FUCKING VARIABLE NAME TO ACCOUNT INSTEAD OF USER
+  def server_side
   @response = {'status'=>'failure'} and return unless api_params[:login] && api_params[:password] && api_params[:api_key]=='0mfd1INmx86TAzY3U25O' && api_params[:server_id]
   if api_params[:login][0]=='@'
     login = api_params[:login]
@@ -26,14 +26,12 @@ respond_to :json
     @response = {'status'=>'failure'} and return if account.nil?
     @response = {'status'=>'failure'} and return unless server && account.server_pool_id>=server.server_pool_id && account.expire>Time.now &&
                                                         authorizeSubaccount(login, password) && account.active<=4
-    invokeScript(account.login, server.id.to_s) and cleanUp(account, server) if account.active>=3 ###THIS IS AN UGLY HACK AND A POSSIBLE SECURITY LEAK.
     @response = {'status'=>'success'}
   else
     server = Server.find(api_params[:server_id])
     account = Account.find_by login: api_params[:login]
     @response = {'status'=>'failure'} and return unless account && server && account.server_pool_id>=server.server_pool_id && account.expire>Time.now &&
                                                         account.password==api_params[:password] && account.active<=4
-    invokeScript(account.login, server.id.to_s) and cleanUp(account, server) if account.active>=3 ###THIS IS AN UGLY HACK AND A POSSIBLE SECURITY LEAK.
     @response = {'status'=>'success'}
   end
 
@@ -69,12 +67,13 @@ respond_to :json
   end
 
   def logs_params
-   params.permit(:username, :kilobytes_sent, :kilobytes_received, :remote_ip, :api_key, :session_length, :server_id)
+   params.permit(:username, :kilobytes_sent, :kilobytes_received, :remote_ip, :api_key, :session_start, :session_end, :server_id, :format)
 
   end
 
  def disconnect
-  @response = {'status'=>'disconnection failure'} and return unless logs_params[:username] && logs_params[:kilobytes_sent] && logs_params[:kilobytes_received] && logs_params[:server_id] && logs_params[:api_key] && logs_params[:session_length]
+  @response = {'status'=>'disconnection failure'} and return unless logs_params[:username] && logs_params[:kilobytes_sent] && logs_params[:kilobytes_received] && logs_params[:server_id] &&
+                                                              logs_params[:api_key] && logs_params[:session_start]  && logs_params[:session_end] && logs_params[:remote_ip]
   @response = {'status'=>'disconnection failure'} and return unless logs_params[:api_key]=='0mfd1INmx86TAzY3U25O'
   @response = {'status'=>'disconnection failure'} and logger.fatal "VPN with that username (#{logs_params[:username]}) SHOULDN'T EXIST. Security breach?" and return unless Account.exists?(:login => logs_params[:username]) or SpecialAccount.exists?(:login => logs_params[:username])
   begin
@@ -94,8 +93,8 @@ respond_to :json
    log.kilobytes_sent=logs_params[:kilobytes_sent].to_i
    log.kilobytes_received=logs_params[:kilobytes_received].to_i
    log.remote = logs_params[:remote_ip]
-   log.end = Time.now
-   log.start = Time.now - logs_params[:session_length].to_i
+   log.start = logs_params[:session_start].to_datetime
+   log.end = logs_params[:session_end].to_datetime
    log.save!
    @response = {'status'=>'disconnection successful'}
   rescue => e

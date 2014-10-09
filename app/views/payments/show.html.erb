@@ -1,0 +1,13 @@
+<h1>Payments</h1>
+<table class = "table table-bordered table-striped">
+<% @payments.each do |payment|  %>
+<tr>
+<td><%= payment.user.email %></td>
+<td><%= payment.processor.name %> </td>
+<td><%= number_to_currency(payment.amount) %></td>
+<td><%= payment.status %></td>
+<td><%= payment.updated_at %></td>
+
+</tr>
+<% end %>
+</table>
