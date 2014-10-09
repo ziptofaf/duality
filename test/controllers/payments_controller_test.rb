@@ -1,9 +1,9 @@
 require 'test_helper'
 
 class PaymentsControllerTest < ActionController::TestCase
-  test "should get show" do
+  test "shouldnt get show without admin rights" do
     get :show
-    assert_response :success
+    assert_response :redirect
   end
 
 end
