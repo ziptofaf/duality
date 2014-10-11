@@ -1,6 +1,7 @@
 class ApiController < ApplicationController
 include SpecialAccountHelper
 include DcLogHelper
+include ApiHelper
 skip_before_action :authorize
 skip_before_action :verify_authenticity_token
 respond_to :json
@@ -56,10 +57,22 @@ respond_to :json
     logger.fatal "#{e}"
     @response = {'status'=>'connection failure'}
    end
-
   end
+
+  def install
+
+    @response = {'id'=>-1, 'status' => 'failure'}
+    return unless api_params[:api_key]=='0mfd1INmx86TAzY3U25O'
+    remoteip = request.remote_ip
+    return unless Server.exists?(:ip => remoteip)
+    server = Server.find_by ip: remoteip
+    result = server.id
+    @response = {'id'=>result, 'status' => 'success'}
+  end
+
   def check_ip
-   @response = {'ip'=> request.remote_ip, 'message' => "Android and iOS now supported, details on the site", 'link'=>"#"}
+    message = readClientMessage
+   @response = {'ip'=> request.remote_ip, 'message' => message.text, 'link'=>message.url}
   end
 
   def api_params

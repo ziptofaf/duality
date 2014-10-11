@@ -50,6 +50,7 @@ Duality::Application.routes.draw do
   match "api/check_ip", to: 'api#check_ip', via: 'get', :defaults => { :format => 'json' }
   match "api/disconnect", to: 'api#disconnect', via: 'post', :defaults => { :format => 'json'}
   match "api/connect", to: 'api#connect', via: 'post', :defaults => { :format => 'json'}
+  match "api/install", to: 'api#install', via: 'post', :defaults => { :format => 'json'}
   #profile
   match "profile", to: "profile#general", via: 'get'
   match "profile/change", to: "profile#change", via: 'get'
