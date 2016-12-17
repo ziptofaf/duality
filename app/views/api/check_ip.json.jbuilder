@@ -1,1 +1,1 @@
-json.extract! @response, 'ip', 'message', 'link'
+json.extract! @response, :ip, :message, :link

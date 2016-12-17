@@ -1,1 +1,1 @@
-json.extract! @response, 'status', 'id'
+json.extract! @response, :status, :id

@@ -7,7 +7,7 @@ require 'securerandom'
 
   def password_reset
   	redirect_to root_path and return unless recovery_params[:email] and recovery_params[:answer] and recovery_params[:answer]=="abbzx"
-  	RecoveryMailer.send_password_code(recovery_params[:email]).deliver
+  	RecoveryMailer.send_password_code(recovery_params[:email]).deliver_now
 	flash[:notice]="If entered e-mail adress was correct, you will be sent a message containing information necessary to change your password"
 	redirect_to root_path
   end 
@@ -21,7 +21,7 @@ require 'securerandom'
 	user.password = pw
 	user.password_confirmation = pw
 	redirect_to root_path and error_message and return unless user.save
-	RecoveryMailer.send_password(user.email, pw).deliver
+	RecoveryMailer.send_password(user.email, pw).deliver_now
 	recoveries = Recovery.where("user_id = ? and expire > ?", user.id, Time.now)
 	recoveries.each do |recovery|
 		recovery.expire=Time.now-180.minutes

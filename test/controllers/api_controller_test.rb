@@ -11,4 +11,8 @@ class ApiControllerTest < ActionController::TestCase
     assert_response :success
   end
 
+ test "Should check your IP" do
+   get :check_ip, :format=>'json'
+   assert_response :success
+ end
 end
